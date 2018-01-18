@@ -8,7 +8,7 @@ import java.util.Date;
 public class User {
 
     //用户id，自增
-    private Integer id;
+    private Long id;
     //用户名
     private String name;
     //用户头像
@@ -32,11 +32,11 @@ public class User {
     //更新时间
     private Date updateTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
