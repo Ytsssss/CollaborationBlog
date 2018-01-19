@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author 
+ * @author Ytsssss
  */
 public class Blog implements Serializable {
     private Long id;

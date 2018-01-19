@@ -31,6 +31,10 @@ public class User implements Serializable {
 
     private Date updateTime;
 
+    private String accoutId;
+
+    private String password;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -129,6 +133,22 @@ public class User implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getAccoutId() {
+        return accoutId;
+    }
+
+    public void setAccoutId(String accoutId) {
+        this.accoutId = accoutId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -152,7 +172,9 @@ public class User implements Serializable {
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getPhoneNumber() == null ? other.getPhoneNumber() == null : this.getPhoneNumber().equals(other.getPhoneNumber()))
             && (this.getSchool() == null ? other.getSchool() == null : this.getSchool().equals(other.getSchool()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getAccoutId() == null ? other.getAccoutId() == null : this.getAccoutId().equals(other.getAccoutId()))
+            && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()));
     }
 
     @Override
@@ -171,6 +193,8 @@ public class User implements Serializable {
         result = prime * result + ((getPhoneNumber() == null) ? 0 : getPhoneNumber().hashCode());
         result = prime * result + ((getSchool() == null) ? 0 : getSchool().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getAccoutId() == null) ? 0 : getAccoutId().hashCode());
+        result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         return result;
     }
 
@@ -192,6 +216,8 @@ public class User implements Serializable {
         sb.append(", phoneNumber=").append(phoneNumber);
         sb.append(", school=").append(school);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", accoutId=").append(accoutId);
+        sb.append(", password=").append(password);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
