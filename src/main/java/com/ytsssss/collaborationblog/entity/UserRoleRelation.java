@@ -1,11 +1,17 @@
 package com.ytsssss.collaborationblog.entity;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Create by Ytsssss on 2018/1/18
  */
+@Entity
 public class UserRoleRelation {
+    @Id
+    @GeneratedValue
     //用户查看权限id，自增
     private Long id;
     //博客id
@@ -18,6 +24,9 @@ public class UserRoleRelation {
     private Date createTime;
     //更新时间
     private Date updateTime;
+
+    public UserRoleRelation() {
+    }
 
     public Long getId() {
         return id;

@@ -1,14 +1,18 @@
 package com.ytsssss.collaborationblog.entity;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.xml.soap.Text;
+import javax.persistence.Id;
 
 /**
  * Create by Ytsssss on 2018/1/18
  */
-
+@Entity
 public class Blog {
-
+    @Id
+    @GeneratedValue
     //博客id，自增
     private Long id;
     //用户id
@@ -22,11 +26,14 @@ public class Blog {
     //是否公开; 0：全部可见，1：部分可见，2：私密
     private Integer isPublic;
     //博客内容
-    private Text content;
+    private String content;
     //创建时间
     private Date createTime;
     //更新时间
     private Date updateTime;
+
+    public Blog() {
+    }
 
     public Long getId() {
         return id;
@@ -76,11 +83,11 @@ public class Blog {
         this.isPublic = isPublic;
     }
 
-    public Text getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Text content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

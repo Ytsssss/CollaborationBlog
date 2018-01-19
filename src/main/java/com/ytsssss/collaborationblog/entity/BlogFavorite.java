@@ -1,11 +1,17 @@
 package com.ytsssss.collaborationblog.entity;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Create by Ytsssss on 2018/1/18
  */
+@Entity
 public class BlogFavorite {
+    @Id
+    @GeneratedValue
     //博客收藏id，自增
     private Long id;
     //博客id
@@ -16,6 +22,9 @@ public class BlogFavorite {
     private Date createTime;
     //更新时间
     private Date updateTime;
+
+    public BlogFavorite() {
+    }
 
     public Long getId() {
         return id;

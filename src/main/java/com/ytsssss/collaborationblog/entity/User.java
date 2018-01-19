@@ -1,12 +1,17 @@
 package com.ytsssss.collaborationblog.entity;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Create by Ytsssss on 2018/1/18
  */
+@Entity
 public class User {
-
+    @Id
+    @GeneratedValue
     //用户id，自增
     private Long id;
     //用户名
@@ -31,6 +36,9 @@ public class User {
     private Date createTime;
     //更新时间
     private Date updateTime;
+
+    public User() {
+    }
 
     public Long getId() {
         return id;
