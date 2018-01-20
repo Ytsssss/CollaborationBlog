@@ -10,3 +10,6 @@ spring:
     show-sql: true
 server:
   port: 8080
+mybatis:
+  mapperLocations: mapper/**.xml
+  typeAliasesPackage: com.ytsssss.collaborationblog.domain
