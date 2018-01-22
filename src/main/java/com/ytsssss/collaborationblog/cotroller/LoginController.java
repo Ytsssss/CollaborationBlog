@@ -1,5 +1,7 @@
 package com.ytsssss.collaborationblog.cotroller;
 
+import com.ytsssss.collaborationblog.constant.statuscode.GlobalResultStatus;
+import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +18,13 @@ public class LoginController {
 
     @GetMapping(value = "/login/{accountId}/{password}")
     public Object login(@PathVariable("accountId") String accountId, @PathVariable("password") String password){
-        Long isALLowLogin = userService.login(accountId, password);
-        return isALLowLogin;
+        Long userId = userService.login(accountId, password);
+        if (userId.equals(-1L)){
+            return JsonResult.fail(GlobalResultStatus.PASSWORD_ERROR);
+        }else if (userId.equals(-2L)){
+            return JsonResult.fail(GlobalResultStatus.ACCOUNTID_NOEXIST);
+        }
+        return JsonResult.success(userId);
     }
 
 }

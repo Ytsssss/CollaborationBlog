@@ -31,4 +31,12 @@ public interface UserService {
      * @return userId
      */
     Long login(String accountId, String password);
+
+    /**
+     * 注册账号
+     * @param accountId
+     * @param password
+     * @return userId
+     */
+    Long register(String accountId, String password);
 }

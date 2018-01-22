@@ -3,6 +3,7 @@ package com.ytsssss.collaborationblog.service.Impl;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.mapper.UserMapper;
 import com.ytsssss.collaborationblog.service.UserService;
+import com.ytsssss.collaborationblog.util.SHAUtil;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +17,45 @@ public class UserServiceImpl implements UserService{
     private UserMapper userMapper;
     @Override
     public User getUserInfo(String accountId, String password) {
-        return null;
+        User user = userMapper.getUserInfoByIdAndPassword(accountId, password);
+        return user;
     }
 
     @Override
     public User getUserInfo(Long userId) {
-        return null;
+        return userMapper.selectByPrimaryKey(userId);
     }
 
     @Override
     public Long login(String accountId, String password) {
-        Long userId = userMapper.selectByaccountIdAndPassword(accountId, password);
+        //使用SHA 进行密码加密
+        String encode = SHAUtil.getResult(password);
+        Long userId = userMapper.selectByaccountId(accountId);
+        if (userId == null || "".equals(userId)){
+            return -2L;
+        }
+        // 如果账号存在，查看账号密码是否正确
+        userId = userMapper.selectByaccountIdAndPassword(accountId, encode);
         if (userId == null || "".equals(userId)){
             return -1L;
         }
         return userId;
+    }
+
+    @Override
+    public Long register(String accountId, String password) {
+        Long userId = userMapper.selectByaccountId(accountId);
+        if (userId != null){
+            return -1L;
+        }
+        //使用SHA 进行密码加密
+        String encode = SHAUtil.getResult(password);
+
+        User user = new User();
+        user.setaccountId(accountId);
+        user.setPassword(encode);
+        user.setName(accountId);
+
+        return (long)userMapper.insertSelective(user);
     }
 }

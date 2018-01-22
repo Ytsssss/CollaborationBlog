@@ -38,6 +38,22 @@ public interface UserMapper {
      * @param password
      * @return
      */
-    //@Select("select id from user where account_id = #{accountId} and password = #{password}")
+    @Select("select id from user where account_id = #{accountId} and password = #{password}")
     Long selectByaccountIdAndPassword(@Param("accountId") String accountId, @Param("password") String password);
+
+    /**
+     * 判断用户名是否重复
+     * @param accountId
+     * @return
+     */
+    @Select("select id from user where account_id = #{accountId}")
+    Long selectByaccountId(@Param("accountId") String accountId);
+
+    /**
+     * 根据用户名密码获取用户信息
+     * @param accountId
+     * @param password
+     * @return
+     */
+    User getUserInfoByIdAndPassword(@Param("accountId") String accountId, @Param("password") String password);
 }

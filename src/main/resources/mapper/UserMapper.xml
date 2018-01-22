@@ -358,10 +358,10 @@
       password = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <!--判断用户是否存在-->
-  <select id="selectByaccountIdAndPassword" resultType="java.lang.Long">
-    select id
+  <select id="getUserInfoByIdAndPassword" resultType="map" parameterType="com.ytsssss.collaborationblog.domain.User">
+    select
+    <include refid="Base_Column_List" />
     from user
-    where account_id = #{accountId,jdbcType=VARCHAR} and password = #{password}
+    where where account_id = #{accountId,jdbcType=VARCHAR} and password = #{password}
   </select>
 </mapper>

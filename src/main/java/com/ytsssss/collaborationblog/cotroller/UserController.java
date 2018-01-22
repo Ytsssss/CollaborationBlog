@@ -1,5 +1,11 @@
 package com.ytsssss.collaborationblog.cotroller;
 
+import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.json.JsonResult;
+import com.ytsssss.collaborationblog.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -7,5 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class UserController {
+    @Autowired
+    private UserService userService;
 
+    @GetMapping(value = "/getuserinfo/{id}")
+    public Object getUserInfo(@PathVariable("id") Long userId){
+        User user = userService.getUserInfo(userId);
+        return JsonResult.success(user);
+    }
 }
