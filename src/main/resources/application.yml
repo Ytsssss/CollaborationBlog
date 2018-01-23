@@ -8,8 +8,16 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+  mail:
+    host: mail.yonyou.com
+    username: yegk7
+    password: yekun520
+    default-encoding: utf-8
 server:
   port: 8080
 mybatis:
   mapperLocations: mapper/**.xml
   typeAliasesPackage: com.ytsssss.collaborationblog.domain
+mail:
+  fromMail:
+     addr: yegk7@yonyou.com

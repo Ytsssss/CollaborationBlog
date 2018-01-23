@@ -1,6 +1,6 @@
 package com.ytsssss.collaborationblog.cotroller;
 
-import com.ytsssss.collaborationblog.constant.statuscode.GlobalResultStatus;
+import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
 import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

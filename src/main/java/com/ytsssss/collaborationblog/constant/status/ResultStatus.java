@@ -1,4 +1,4 @@
-package com.ytsssss.collaborationblog.constant.statuscode;
+package com.ytsssss.collaborationblog.constant.status;
 
 import java.io.Serializable;
 

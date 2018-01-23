@@ -1,7 +1,7 @@
 package com.ytsssss.collaborationblog.json;
 
-import com.ytsssss.collaborationblog.constant.statuscode.GlobalResultStatus;
-import com.ytsssss.collaborationblog.constant.statuscode.ResultStatus;
+import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
+import com.ytsssss.collaborationblog.constant.status.ResultStatus;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
