@@ -35,7 +35,9 @@ public interface UserService {
      * 注册账号
      * @param accountId
      * @param password
+     * @param verifyCode 邮箱验证码
+     * @param mailAddress 邮箱
      * @return userId
      */
-    Long register(String accountId, String password);
+    Long register(String accountId, String password, String verifyCode, String mailAddress);
 }

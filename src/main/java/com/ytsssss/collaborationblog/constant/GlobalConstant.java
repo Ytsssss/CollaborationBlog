@@ -6,5 +6,6 @@ package com.ytsssss.collaborationblog.constant;
 public class GlobalConstant {
 
     public static final String MAILTITTLE = "欢迎注册CollaborationBlog";
+    public static final String MAILCODE = "verificationCode";
 
 }

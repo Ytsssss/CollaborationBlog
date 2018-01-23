@@ -13,6 +13,17 @@ spring:
     username: yegk7
     password: yekun520
     default-encoding: utf-8
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
 server:
   port: 8080
 mybatis:

@@ -1,11 +1,14 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
+import com.ytsssss.collaborationblog.constant.GlobalConstant;
 import com.ytsssss.collaborationblog.service.MailService;
 import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,8 @@ public class MailServiceImpl implements MailService{
     private static Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Value("${mail.fromMail.addr}")
     private String from;
@@ -37,6 +42,16 @@ public class MailServiceImpl implements MailService{
             logger.info("发送邮件到:"+to);
         } catch (Exception e) {
             logger.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void saveRedisForMailCode(String code) {
+        try {
+            stringRedisTemplate.opsForValue().set(GlobalConstant.MAILCODE,code);
+            logger.info("验证码为: "+code);
+        }catch (Exception e){
+            logger.error("将邮件验证码存入redis出现错误 "+e.getMessage());
         }
 
     }

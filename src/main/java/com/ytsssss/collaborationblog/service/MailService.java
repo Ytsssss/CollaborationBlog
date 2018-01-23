@@ -5,4 +5,5 @@ package com.ytsssss.collaborationblog.service;
  */
 public interface MailService {
     void sendTemplateMail(String to, String subject, String content);
+    void saveRedisForMailCode(String code);
 }
