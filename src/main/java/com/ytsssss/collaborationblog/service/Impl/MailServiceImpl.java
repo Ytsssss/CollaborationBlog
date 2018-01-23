@@ -2,9 +2,10 @@ package com.ytsssss.collaborationblog.service.Impl;
 
 import com.ytsssss.collaborationblog.service.MailService;
 import javax.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MailServiceImpl implements MailService{
+    private static Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     @Autowired
     private JavaMailSender mailSender;
 
@@ -24,7 +26,7 @@ public class MailServiceImpl implements MailService{
     public void sendTemplateMail(String to, String subject, String content) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
-        //true表示需要创建一个multipart message
+            //true表示需要创建一个multipart message
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
             helper.setTo(to);
@@ -32,9 +34,9 @@ public class MailServiceImpl implements MailService{
             helper.setText(content,true);
 
             mailSender.send(message);
-            System.out.println("success");
+            logger.info("发送邮件到:"+to);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
     }

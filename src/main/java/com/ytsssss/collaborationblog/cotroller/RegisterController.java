@@ -19,9 +19,6 @@ public class RegisterController {
     @PostMapping(value = "register")
     public Object register(@RequestParam("accountId") String accountId, @RequestParam("password")String password){
         Long userId = userService.register(accountId, password);
-        if (userId.equals(-1L)){
-            return JsonResult.fail(GlobalResultStatus.ACCOUNTID_EXIST);
-        }
         return JsonResult.success();
     }
 }

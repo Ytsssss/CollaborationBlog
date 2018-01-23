@@ -5,6 +5,8 @@ import com.ytsssss.collaborationblog.mapper.UserMapper;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.SHAUtil;
 import javax.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService{
 
+    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
     @Override
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Long register(String accountId, String password) {
+    public Long register(String accountId, String password){
         Long userId = userMapper.selectByaccountId(accountId);
         if (userId != null){
             return -1L;

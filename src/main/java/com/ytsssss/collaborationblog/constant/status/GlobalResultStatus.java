@@ -7,6 +7,7 @@ package com.ytsssss.collaborationblog.constant.status;
 public class GlobalResultStatus {
 
     public static final ResultStatus SUCCESS = new ResultStatus(0, "成功");
+    public static final ResultStatus ERROR = new ResultStatus(10000, "失败");
     public static final ResultStatus ACCOUNTID_EXIST = new ResultStatus(10001,"该账号已注册");
     public static final ResultStatus PASSWORD_ERROR = new ResultStatus(10002, "密码错误");
     public static final ResultStatus ACCOUNTID_NOEXIST = new ResultStatus(10003, "该账号不存在");
