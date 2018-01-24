@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,6 +26,14 @@ public class BlogController {
     private BlogService blogService;
     @Autowired
     private UserService userService;
+
+    /**
+     * 新增博客
+     * @param blogVO
+     * @param bindingResult
+     * @param token
+     * @return
+     */
     @PostMapping(value = "/blog/add")
     public Object addBlog(@Valid BlogVO blogVO, BindingResult bindingResult, @PathVariable("token") String token){
         if (bindingResult.hasErrors()) {
@@ -35,6 +44,36 @@ public class BlogController {
         String value = blogService.addBlog(blogVO, user).toString();
         if (value == null || "".equals(value)){
             return JsonResult.fail(GlobalResultStatus.BLOG_ADD_ERROR);
+        }
+        return JsonResult.success();
+    }
+
+    /**
+     * 修改博客
+     * @param blogVO
+     * @param bindingResult
+     * @param token
+     * @return
+     */
+    @PostMapping(value = "blog/edit")
+    public Object editBlog(@Valid BlogVO blogVO, BindingResult bindingResult, @RequestParam("token") String token){
+        if (bindingResult.hasErrors()) {
+            logger.info(bindingResult.getFieldError().getDefaultMessage());
+            return JsonResult.fail(GlobalResultStatus.PARAM_ERROR);
+        }
+        User user = userService.getUserByToken(token);
+        String value = blogService.addBlog(blogVO, user).toString();
+        if (value == null || "".equals(value)){
+            return JsonResult.fail(GlobalResultStatus.BLOG_EDIT_ERROR);
+        }
+        return JsonResult.success();
+    }
+
+    @PostMapping(value = "blog/delete/{blogId}")
+    public Object deleteBlog(@PathVariable("blogId") Long blogId){
+        int value = blogService.deleteBlog(blogId);
+        if (value < 1){
+            return JsonResult.fail(GlobalResultStatus.BLOG_DELETE_ERROR);
         }
         return JsonResult.success();
     }

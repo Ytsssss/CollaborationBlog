@@ -13,4 +13,6 @@ public class GlobalResultStatus {
     public static final ResultStatus MAILCODE_ERROR = new ResultStatus(10004,"邮箱验证码错误");
     public static final ResultStatus BLOG_ADD_ERROR = new ResultStatus(10005, "新增博客失败");
     public static final ResultStatus PARAM_ERROR = new ResultStatus(10006, "传入参数错误");
+    public static final ResultStatus BLOG_EDIT_ERROR = new ResultStatus(10007,"编辑博客失败");
+    public static final ResultStatus BLOG_DELETE_ERROR = new ResultStatus(10008,"删除博客失败");
 }

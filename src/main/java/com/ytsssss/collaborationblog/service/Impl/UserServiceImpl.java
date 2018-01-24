@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService{
             logger.info("redis中不存在token");
         }
         User user = (User) redisTemplate.opsForValue().get(token);
+        logger.info("用户信息为："+user.toString());
         return user;
     }
 }

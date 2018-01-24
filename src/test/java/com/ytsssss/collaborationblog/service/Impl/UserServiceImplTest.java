@@ -34,4 +34,15 @@ public class UserServiceImplTest {
     public void register() {
         userService.register("111","222","62c82b","12121");
     }
+
+    @Test
+    public void getTokenByUser(){
+        userService.getTokenByUser(9L);
+
+    }
+    @Test
+    public void getUserByToken(){
+        userService.getUserByToken("a5ac1524-6305-44d3-8");
+    }
+
 }

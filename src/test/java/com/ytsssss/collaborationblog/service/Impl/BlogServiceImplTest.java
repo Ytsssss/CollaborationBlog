@@ -30,4 +30,23 @@ public class BlogServiceImplTest {
         user.setId(6L);
         blogService.addBlog(blogVO, user);
     }
+
+    @Test
+    public void editBlog(){
+        BlogVO blogVO = new BlogVO();
+        blogVO.setContent("这是一篇新博客");
+        blogVO.setIsComment(0);
+        blogVO.setIsPublic(0);
+        blogVO.setId(5L);
+        blogVO.setStatus(0);
+        blogVO.setReadTime(8L);
+        User user = new User();
+        user.setId(6L);
+        blogService.editBlog(blogVO, user);
+    }
+
+    @Test
+    public void deleteBlog(){
+        blogService.deleteBlog(4L);
+    }
 }
