@@ -32,6 +32,7 @@ public class BlogServiceImpl implements BlogService{
         blog.setReadTime(0L);
         blog.setCreateTime(date);
         blog.setUpdateTime(date);
+
         logger.info(blog.toString());
 
         return blogMapper.insert(blog);
