@@ -40,4 +40,18 @@ public interface UserService {
      * @return userId
      */
     Long register(String accountId, String password, String verifyCode, String mailAddress);
+
+    /**
+     *  通过userId 获取token
+     * @param userId
+     * @return
+     */
+    String getTokenByUser(Long userId);
+
+    /**
+     * 通过token获得用户信息
+     * @param token
+     * @return
+     */
+    User getUserByToken(String token);
 }

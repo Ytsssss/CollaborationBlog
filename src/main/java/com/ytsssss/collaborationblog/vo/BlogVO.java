@@ -1,6 +1,7 @@
 package com.ytsssss.collaborationblog.vo;
 
 import java.util.Date;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Ytsssss
@@ -8,6 +9,7 @@ import java.util.Date;
 public class BlogVO {
     private Long id;
 
+    @NotBlank(message = "博客内容必传")
     private String content;
 
     private Date createTime;

@@ -1,8 +1,11 @@
 package com.ytsssss.collaborationblog.cotroller;
 
 import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
+import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.json.JsonResult;
+import com.ytsssss.collaborationblog.mapper.UserMapper;
 import com.ytsssss.collaborationblog.service.UserService;
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,9 @@ public class LoginController {
         }else if (userId.equals(-2L)){
             return JsonResult.fail(GlobalResultStatus.ACCOUNTID_NOEXIST);
         }
-        return JsonResult.success(userId);
+        //通过用户id生成token
+        String token = userService.getTokenByUser(userId);
+        return JsonResult.success(token);
     }
 
 }

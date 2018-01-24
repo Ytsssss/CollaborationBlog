@@ -12,4 +12,5 @@ public class GlobalResultStatus {
     public static final ResultStatus ACCOUNTID_NOEXIST = new ResultStatus(10003, "该账号不存在");
     public static final ResultStatus MAILCODE_ERROR = new ResultStatus(10004,"邮箱验证码错误");
     public static final ResultStatus BLOG_ADD_ERROR = new ResultStatus(10005, "新增博客失败");
+    public static final ResultStatus PARAM_ERROR = new ResultStatus(10006, "传入参数错误");
 }
