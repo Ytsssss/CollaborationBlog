@@ -3,8 +3,10 @@ package com.ytsssss.collaborationblog.mapper;
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.example.BlogExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface BlogMapper {
     long countByExample(BlogExample example);
 

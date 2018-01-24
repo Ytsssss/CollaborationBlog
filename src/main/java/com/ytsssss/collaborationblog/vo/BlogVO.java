@@ -22,7 +22,7 @@ public class BlogVO {
 
     private Date updateTime;
 
-    private Integer userId;
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 
@@ -90,11 +90,11 @@ public class BlogVO {
         this.updateTime = updateTime;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

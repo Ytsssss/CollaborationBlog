@@ -16,7 +16,7 @@ public class Blog {
     //博客id，自增
     private Long id;
     //用户id
-    private Integer userId;
+    private Long userId;
     //状态；0：正常，1：草稿，2：删除
     private Integer status;
     //是否允许评论; 0：允许，1：不允许
@@ -43,11 +43,11 @@ public class Blog {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
