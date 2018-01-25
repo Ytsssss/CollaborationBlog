@@ -34,5 +34,5 @@ public interface BlogService {
     int deleteBlog(Long blogId);
 
 
-    List<Blog> getBlogList(Long userId);
+    List<Long> getBlogList(Long userId);
 }

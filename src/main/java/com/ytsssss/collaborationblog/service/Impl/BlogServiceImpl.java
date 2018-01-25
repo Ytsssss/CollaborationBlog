@@ -57,7 +57,7 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public List<Blog> getBlogList(Long userId) {
+    public List<Long> getBlogList(Long userId) {
         return null;
     }
 }
