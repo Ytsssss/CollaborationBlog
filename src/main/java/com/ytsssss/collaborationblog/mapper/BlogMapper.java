@@ -36,5 +36,7 @@ public interface BlogMapper {
 
     List<Long> getFriendBlobList(@Param("userId") Long userId);
 
-    List<Long>getDraftBlogList(@Param("userId") Long userId);
+    List<Long> getDraftBlogList(@Param("userId") Long userId);
+
+    List<Blog> getBlogListByIds(@Param("blogIdList") List<Long> blogIdList);
 }

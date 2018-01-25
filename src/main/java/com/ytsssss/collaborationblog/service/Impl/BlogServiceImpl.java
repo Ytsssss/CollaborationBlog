@@ -81,4 +81,11 @@ public class BlogServiceImpl implements BlogService{
         return Collections.emptyList();
     }
 
+    @Override
+    public List<Blog> getBlogList(List<Long> blogIdList) {
+        logger.info("查询结果为："+blogMapper.getBlogListByIds(blogIdList));
+        return blogMapper.getBlogListByIds(blogIdList);
+    }
+
+
 }

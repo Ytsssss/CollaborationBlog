@@ -4,7 +4,9 @@ import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.service.BlogFavoriteService;
+import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
+import java.util.Collections;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,8 @@ public class BlogFavoriteController {
     private static Logger logger = LoggerFactory.getLogger(BlogController.class);
     @Autowired
     private BlogFavoriteService blogFavoriteService;
+    @Autowired
+    private BlogService blogService;
     @Autowired
     private UserService userService;
 
@@ -51,7 +55,9 @@ public class BlogFavoriteController {
         List<Long> favoriteList = blogFavoriteService.getBlogFavoriteList(user.getId());
         if (favoriteList == null){
             return JsonResult.fail(GlobalResultStatus.BLOG_FAVORITE_LIST_ERROR);
+        }else if(favoriteList.isEmpty() || "".equals(favoriteList)){
+            return JsonResult.success(Collections.emptyMap());
         }
-        return JsonResult.success(favoriteList);
+        return JsonResult.success(blogService.getBlogList(favoriteList));
     }
 }

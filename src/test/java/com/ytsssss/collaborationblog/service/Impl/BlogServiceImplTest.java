@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.vo.BlogVO;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +54,13 @@ public class BlogServiceImplTest {
     @Test
     public void getBlog(){
         blogService.getBlogList(6L,1);
+    }
+
+    @Test
+    public void getList(){
+        List<Long> list = new ArrayList<>();
+        list.add(5L);
+        list.add(6L);
+        blogService.getBlogList(list);
     }
 }

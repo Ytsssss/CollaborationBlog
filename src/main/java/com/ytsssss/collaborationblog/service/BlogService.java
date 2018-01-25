@@ -40,4 +40,11 @@ public interface BlogService {
      * @return
      */
     List<Long> getBlogList(Long userId, int range);
+
+    /**
+     * 通过blog id集合获取 blog集合
+     * @param blogIdList
+     * @return
+     */
+    List<Blog> getBlogList(List<Long> blogIdList);
 }

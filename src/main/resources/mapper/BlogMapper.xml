@@ -302,4 +302,14 @@
     from blog
     where user_id = #{userId,jdbcType=BIGINT} and status = 1
   </select>
+
+  <select id="getBlogListByIds" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from blog
+    where id in
+    <foreach collection="blogIdList" index="index" item="blogId" open="(" separator="," close=")">
+        #{blogId, jdbcType=BIGINT}
+    </foreach>
+  </select>
 </mapper>
