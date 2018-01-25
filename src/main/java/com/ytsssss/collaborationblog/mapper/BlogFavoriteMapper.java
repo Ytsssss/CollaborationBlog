@@ -27,4 +27,8 @@ public interface BlogFavoriteMapper {
     int updateByPrimaryKeySelective(BlogFavorite record);
 
     int updateByPrimaryKey(BlogFavorite record);
+
+    int deleteByBlogAndUserId(@Param("blogId") Long blogId, @Param("userId") Long userId);
+
+    List<Long> getBlogListByUserId(@Param("userId") Long userId);
 }

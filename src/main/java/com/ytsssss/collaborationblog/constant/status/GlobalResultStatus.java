@@ -15,4 +15,7 @@ public class GlobalResultStatus {
     public static final ResultStatus PARAM_ERROR = new ResultStatus(10006, "传入参数错误");
     public static final ResultStatus BLOG_EDIT_ERROR = new ResultStatus(10007,"编辑博客失败");
     public static final ResultStatus BLOG_DELETE_ERROR = new ResultStatus(10008,"删除博客失败");
+    public static final ResultStatus BLOG_FAVORITE_ERROR = new ResultStatus(10009, "收藏博客失败");
+    public static final ResultStatus BLOG_FAVORITE_CANCEL_ERROR = new ResultStatus(10009, "取消收藏失败");
+    public static final ResultStatus BLOG_FAVORITE_LIST_ERROR = new ResultStatus(10009, "获取收藏列表失败");
 }

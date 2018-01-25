@@ -27,7 +27,7 @@ public class BlogServiceImplTest {
         blogVO.setIsComment(0);
         blogVO.setIsPublic(0);
         User user = new User();
-        user.setId(6L);
+        user.setId(9L);
         blogService.addBlog(blogVO, user);
     }
 
