@@ -33,5 +33,10 @@ public interface BlogService {
      */
     int deleteBlog(Long blogId);
 
+    /**
+     *  查看博客列表
+     * @param userId
+     * @return
+     */
     List<Long> getBlogList(Long userId);
 }
