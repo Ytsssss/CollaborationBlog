@@ -36,7 +36,8 @@ public interface BlogService {
     /**
      *  查看博客列表
      * @param userId
+     * @param range 0:全部博客；1：我的博客；2：公开博客（不包括我的）；3：好友博客 ；4：草稿博客
      * @return
      */
-    List<Long> getBlogList(Long userId);
+    List<Long> getBlogList(Long userId, int range);
 }

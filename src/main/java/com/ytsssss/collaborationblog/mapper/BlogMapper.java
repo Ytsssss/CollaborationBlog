@@ -29,4 +29,12 @@ public interface BlogMapper {
     int updateByPrimaryKeySelective(Blog record);
 
     int updateByPrimaryKey(Blog record);
+
+    List<Long> getMyBlogList(@Param("userId") Long userId);
+
+    List<Long> getPublicBlobList(@Param("userId") Long userId);
+
+    List<Long> getFriendBlobList(@Param("userId") Long userId);
+
+    List<Long>getDraftBlogList(@Param("userId") Long userId);
 }

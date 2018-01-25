@@ -281,4 +281,25 @@
       user_id = #{userId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getMyBlogList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select id
+    from blog
+    where user_id = #{userId,jdbcType=BIGINT} and status = 0
+  </select>
+  <select id="getPublicBlobList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select id
+    from blog
+    where is_public = 0 and status = 0 and user_id != #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="getFriendBlobList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select blog_id
+    from user_role_relation
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="getDraftBlogList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select id
+    from blog
+    where user_id = #{userId,jdbcType=BIGINT} and status = 1
+  </select>
 </mapper>

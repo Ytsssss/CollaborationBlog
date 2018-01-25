@@ -5,6 +5,8 @@ import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.mapper.BlogMapper;
 import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.vo.BlogVO;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -57,7 +59,26 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public List<Long> getBlogList(Long userId) {
-        return null;
+    public List<Long> getBlogList(Long userId, int range) {
+        List<Long> myBlogList = new ArrayList<>();
+        List<Long> publicBlogList = new ArrayList<>();
+        List<Long> friendBlogList = new ArrayList<>();
+        List<Long> draftBlogList = new ArrayList<>();
+        List<Long> allBlogList = new ArrayList<>();
+        if (range == 1){
+            logger.info("查询结果为："+blogMapper.getMyBlogList(userId));
+            return blogMapper.getMyBlogList(userId);
+        }else if (range == 2){
+            logger.info("查询结果为："+blogMapper.getPublicBlobList(userId));
+            return blogMapper.getPublicBlobList(userId);
+        }else if (range == 3){
+            logger.info("查询结果为："+blogMapper.getFriendBlobList(userId));
+            return blogMapper.getFriendBlobList(userId);
+        }else if (range == 4){
+            logger.info("查询结果为："+blogMapper.getDraftBlogList(userId));
+            return blogMapper.getDraftBlogList(userId);
+        }
+        return Collections.emptyList();
     }
+
 }

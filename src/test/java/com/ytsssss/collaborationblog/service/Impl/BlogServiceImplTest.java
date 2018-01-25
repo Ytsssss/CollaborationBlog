@@ -49,4 +49,8 @@ public class BlogServiceImplTest {
     public void deleteBlog(){
         blogService.deleteBlog(4L);
     }
+    @Test
+    public void getBlog(){
+        blogService.getBlogList(6L,1);
+    }
 }
