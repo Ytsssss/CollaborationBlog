@@ -39,6 +39,7 @@ public class BlogFavoriteServiceImpl implements BlogFavoriteService{
     @Override
     public List<Long> getBlogFavoriteList(Long userId) {
         logger.info("查询的结果为："+blogFavoriteMapper.getBlogListByUserId(userId));
+
         return blogFavoriteMapper.getBlogListByUserId(userId);
     }
 }
