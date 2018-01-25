@@ -18,4 +18,7 @@ public class GlobalResultStatus {
     public static final ResultStatus BLOG_FAVORITE_ERROR = new ResultStatus(10009, "收藏博客失败");
     public static final ResultStatus BLOG_FAVORITE_CANCEL_ERROR = new ResultStatus(10009, "取消收藏失败");
     public static final ResultStatus BLOG_FAVORITE_LIST_ERROR = new ResultStatus(10009, "获取收藏列表失败");
+    public static final ResultStatus BLOG_LIKE_ERROR = new ResultStatus(10009, "喜欢博客失败");
+    public static final ResultStatus BLOG_LIKE_CANCEL_ERROR = new ResultStatus(10009, "取消喜欢失败");
+    public static final ResultStatus BLOG_LIKE_LIST_ERROR = new ResultStatus(10009, "获取喜欢列表失败");
 }

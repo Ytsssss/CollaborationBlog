@@ -216,4 +216,15 @@
       user_id = #{userId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <delete id="deleteByBlogAndUserId" parameterType="java.lang.Long">
+    delete
+    from blog_like
+    where user_id = #{userId,jdbcType=BIGINT} and blog_id = #{blogId,jdbcType=BIGINT}
+  </delete>
+  <select id="getBlogListByUserId"  parameterType="java.lang.Long" resultType="java.lang.Long">
+    select blog_id
+    from blog_like
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

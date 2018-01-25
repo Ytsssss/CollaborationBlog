@@ -27,4 +27,8 @@ public interface BlogLikeMapper {
     int updateByPrimaryKeySelective(BlogLike record);
 
     int updateByPrimaryKey(BlogLike record);
+
+    int deleteByBlogAndUserId(@Param("blogId") Long blogId, @Param("userId") Long userId);
+
+    List<Long> getBlogListByUserId(@Param("userId") Long userId);
 }
