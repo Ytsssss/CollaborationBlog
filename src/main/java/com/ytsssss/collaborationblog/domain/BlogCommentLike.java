@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @author 
  */
-public class UserCommentLike implements Serializable {
+public class BlogCommentLike implements Serializable {
     private Long id;
 
     private Long blogCommentId;
@@ -70,7 +70,7 @@ public class UserCommentLike implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        UserCommentLike other = (UserCommentLike) that;
+        BlogCommentLike other = (BlogCommentLike) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getBlogCommentId() == null ? other.getBlogCommentId() == null : this.getBlogCommentId().equals(other.getBlogCommentId()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))

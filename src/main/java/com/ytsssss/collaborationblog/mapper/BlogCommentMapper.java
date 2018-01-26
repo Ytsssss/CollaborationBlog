@@ -27,4 +27,6 @@ public interface BlogCommentMapper {
     int updateByPrimaryKeySelective(BlogComment record);
 
     int updateByPrimaryKey(BlogComment record);
+
+    int deleteBycommentList(@Param("commentList") List<Long> commentList);
 }
