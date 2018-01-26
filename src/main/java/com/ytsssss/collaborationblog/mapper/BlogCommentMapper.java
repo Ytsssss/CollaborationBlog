@@ -28,5 +28,24 @@ public interface BlogCommentMapper {
 
     int updateByPrimaryKey(BlogComment record);
 
+    /**
+     * 删除级联回复
+     * @param commentList
+     * @return
+     */
     int deleteBycommentList(@Param("commentList") List<Long> commentList);
+
+    /**
+     * 通过评论回复id获取评论id
+     * @param replyCommentId
+     * @return
+     */
+    List<Long> getIdByReplyId(@Param("replyCommentId") Long replyCommentId);
+
+    /**
+     *  获取博客的评论列表
+     * @param blogId
+     * @return
+     */
+    List<BlogComment> getBlogCommentList(@Param("blogId") Long blogId);
 }

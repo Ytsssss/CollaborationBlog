@@ -7,6 +7,8 @@ import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.mapper.BlogCommentLikeMapper;
 import com.ytsssss.collaborationblog.mapper.BlogCommentMapper;
 import com.ytsssss.collaborationblog.service.BlogCommentService;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,7 @@ public class BlogCommentServiceImpl implements BlogCommentService{
         return blogCommentMapper.deleteByPrimaryKey(commentId);
     }
 
+
     @Override
     public int addCommentLike(Long blogCommentId, Long userId) {
         BlogCommentLike blogCommentLike = new BlogCommentLike();
@@ -56,5 +59,11 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     @Override
     public int cancelCommentLike(Long blogCommentId, Long userId) {
         return blogCommentLikeMapper.deleteByBlogCommentAndUserId(blogCommentId,userId);
+    }
+
+    @Override
+    public List<BlogComment> getBlogCommentList(Long blogId) {
+        logger.info(blogCommentMapper.getBlogCommentList(blogId).toString());
+        return blogCommentMapper.getBlogCommentList(blogId);
     }
 }

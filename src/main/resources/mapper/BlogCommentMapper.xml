@@ -290,4 +290,17 @@
       #{commentId,jdbcType=BIGINT}
     </foreach>
   </delete>
+
+  <select id="getIdByReplyId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select id
+    from blog_comment
+    where reply_comment_id = #{replyCommentId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getBlogCommentList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from blog_comment
+    where blog_id = #{blogId,jdbcType=BIGINT}
+  </select>
 </mapper>
