@@ -38,7 +38,7 @@ public interface UserRelationService {
     List<Long> getAttentionList(Long userId);
 
     /**
-     * 添加好友
+     * 请求添加好友
      * @param userId
      * @param friendId
      * @return
@@ -52,4 +52,27 @@ public interface UserRelationService {
      * @return
      */
     int deleteUserFriend(Long userId, Long friendId);
+
+    /**
+     * 确认好友关系
+     * @param userId
+     * @param friendId
+     * @param status
+     * @return
+     */
+    int confirmUserFriend(Long userId, Long friendId, int status);
+
+    /**
+     * 获取好友列表
+     * @param userId
+     * @return
+     */
+    List<Long> getUserFriendList(Long userId);
+
+    /**
+     * 获取请求添加好友列表
+     * @param userId
+     * @return
+     */
+    List<Long> getQuestFriendList(Long userId);
 }

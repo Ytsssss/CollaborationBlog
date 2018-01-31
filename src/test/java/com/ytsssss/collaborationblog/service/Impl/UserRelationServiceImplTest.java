@@ -40,9 +40,23 @@ public class UserRelationServiceImplTest {
 
     @Test
     public void addUserFriend() {
+        userRelationService.addUserFriend(9L, 10L);
     }
 
     @Test
     public void deleteUserFriend() {
+        userRelationService.deleteUserFriend(9L, 10L);
+    }
+    @Test
+    public void confirmFriend(){
+        userRelationService.confirmUserFriend(9L, 10L, 0);
+    }
+    @Test
+    public void getfriendList(){
+        userRelationService.getUserFriendList(10L);
+    }
+    @Test
+    public void getquestList(){
+        userRelationService.getQuestFriendList(10L);
     }
 }

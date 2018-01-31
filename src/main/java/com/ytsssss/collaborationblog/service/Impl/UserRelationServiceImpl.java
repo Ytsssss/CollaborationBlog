@@ -1,7 +1,9 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
 import com.ytsssss.collaborationblog.domain.UserAttention;
+import com.ytsssss.collaborationblog.domain.UserFriend;
 import com.ytsssss.collaborationblog.mapper.UserAttentionMapper;
+import com.ytsssss.collaborationblog.mapper.UserFriendMapper;
 import com.ytsssss.collaborationblog.service.UserRelationService;
 import java.util.List;
 import javax.annotation.Resource;
@@ -17,6 +19,8 @@ public class UserRelationServiceImpl implements UserRelationService{
     private static Logger logger = LoggerFactory.getLogger(UserRelationServiceImpl.class);
     @Resource
     private UserAttentionMapper userAttentionMapper;
+    @Resource
+    private UserFriendMapper userFriendMapper;
     @Override
     public int addUserAttention(Long userId, Long attentionId) {
         UserAttention userAttention = new UserAttention();
@@ -44,11 +48,38 @@ public class UserRelationServiceImpl implements UserRelationService{
 
     @Override
     public int addUserFriend(Long userId, Long friendId) {
-        return 0;
+        UserFriend userFriend = new UserFriend();
+        userFriend.setFriendId(friendId);
+        userFriend.setUserId(userId);
+        userFriend.setStatus(1);
+        return userFriendMapper.insertSelective(userFriend);
     }
 
     @Override
     public int deleteUserFriend(Long userId, Long friendId) {
-        return 0;
+        userFriendMapper.deleteByUserAndFriendId(friendId, userId);
+        return userFriendMapper.deleteByUserAndFriendId(userId, friendId);
+    }
+
+    @Override
+    public int confirmUserFriend(Long userId, Long friendId, int status) {
+        UserFriend userFriend = new UserFriend();
+        userFriend.setFriendId(userId);
+        userFriend.setUserId(friendId);
+        userFriend.setStatus(0);
+        userFriendMapper.insertSelective(userFriend);
+        return userFriendMapper.confirmUserFriend(userId, friendId, status);
+    }
+
+    @Override
+    public List<Long> getUserFriendList(Long userId) {
+        logger.info(userFriendMapper.getUserFriendList(userId).toString());
+        return userFriendMapper.getUserFriendList(userId);
+    }
+
+    @Override
+    public List<Long> getQuestFriendList(Long userId) {
+        logger.info(userFriendMapper.getQuestFriendList(userId).toString());
+        return userFriendMapper.getQuestFriendList(userId);
     }
 }
