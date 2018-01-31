@@ -29,12 +29,12 @@ public class MailServiceImplTest {
         Context context = new Context();
         context.setVariable("code", RandomUtil.getRandomNum(6));
         String emailContent = templateEngine.process("emailTemplate", context);
-        MailService.sendTemplateMail("995170811@qq.com", GlobalConstant.MAILTITTLE,emailContent);
+        MailService.sendTemplateMail("592625054@qq.com", GlobalConstant.MAILTITTLE,emailContent);
     }
 
     @Test
     public void saveRedisForMailCode() {
-        MailService.saveRedisForMailCode("62c82b");
+        MailService.saveRedisForMailCode("97ec74");
 
     }
 }

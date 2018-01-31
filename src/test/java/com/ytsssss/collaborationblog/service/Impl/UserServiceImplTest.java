@@ -32,7 +32,7 @@ public class UserServiceImplTest {
 
     @Test
     public void register() {
-        userService.register("111","222","62c82b","12121");
+        userService.register("lianghongcheng","123456","97ec74","592625054@qq.com");
     }
 
     @Test

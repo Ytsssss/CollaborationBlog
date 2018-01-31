@@ -216,4 +216,16 @@
       user_id = #{userId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getUserAttentionList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select attention_id
+    from user_attention
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getUserFansList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select user_id
+    from user_attention
+    where attention_id = #{attentionId,jdbcType=BIGINT}
+  </select>
 </mapper>
