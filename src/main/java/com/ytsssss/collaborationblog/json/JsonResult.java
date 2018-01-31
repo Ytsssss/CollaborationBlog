@@ -57,4 +57,10 @@ public class JsonResult {
         map.put("data",status.getMsg());
         return map;
     }
+    public static Object fail(Object object){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("code", GlobalResultStatus.ERROR.getCode());
+        map.put("data", object);
+        return map;
+    }
 }

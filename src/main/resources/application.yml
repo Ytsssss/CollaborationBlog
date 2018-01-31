@@ -32,3 +32,8 @@ mybatis:
 mail:
   fromMail:
      addr: yegk7@yonyou.com
+qiniu:
+  accessKey: jAyjcTkZaYdX7MZkoGg1oSll53r3nUQVXjkTYxXW
+  secretKey: CzjtEg93N-zEjQCPsLL8seO---O1gXLDsd2Mc5IE
+  bucketName: blog
+  domainOfBucket: p3eetclr1.bkt.clouddn.com
