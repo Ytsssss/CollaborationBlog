@@ -4,6 +4,7 @@ import com.ytsssss.collaborationblog.domain.Team;
 import com.ytsssss.collaborationblog.example.TeamExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface TeamMapper {
     long countByExample(TeamExample example);
@@ -27,4 +28,7 @@ public interface TeamMapper {
     int updateByPrimaryKeySelective(Team record);
 
     int updateByPrimaryKey(Team record);
+
+    @Select("select team_id from team where user_id = #{userId} and status=0")
+    List<Long> getChargeTeamList(@Param("userId")Long userId);
 }
