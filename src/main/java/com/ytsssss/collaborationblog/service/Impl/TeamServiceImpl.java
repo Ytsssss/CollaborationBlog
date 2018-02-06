@@ -5,6 +5,7 @@ import com.ytsssss.collaborationblog.domain.TeamUserRelation;
 import com.ytsssss.collaborationblog.mapper.TeamMapper;
 import com.ytsssss.collaborationblog.mapper.TeamUserRelationMapper;
 import com.ytsssss.collaborationblog.service.TeamService;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import org.slf4j.Logger;
@@ -24,11 +25,13 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public int addTeam(String name, String describe, Long userId, int isPublic, int status) {
         Team team = new Team();
-        team.setDescribe(describe);
+        team.setDescription(describe);
         team.setName(name);
         team.setIsPublic(isPublic);
         team.setStatus(status);
         team.setUserId(userId);
+        team.setCreateTime(new Date());
+        team.setUpdateTime(new Date());
         logger.info(team.toString());
         return teamMapper.insertSelective(team);
     }
@@ -40,11 +43,13 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public List<Long> getChargeTeamList(Long userId) {
+        logger.info(teamMapper.getChargeTeamList(userId).toString());
         return teamMapper.getChargeTeamList(userId);
     }
 
     @Override
     public List<Long> getPartTeamList(Long userId) {
+        logger.info(teamUserRelationMapper.getPartTeamList(userId).toString());
         return teamUserRelationMapper.getPartTeamList(userId);
     }
 
@@ -65,11 +70,13 @@ public class TeamServiceImpl implements TeamService{
 
     @Override
     public Team getTeamInfo(Long teamId) {
+        logger.info(teamMapper.selectByPrimaryKey(teamId).toString());
         return teamMapper.selectByPrimaryKey(teamId);
     }
 
     @Override
     public List<Long> getTeamPartList(Long teamId) {
+        logger.info(teamUserRelationMapper.getTeamPartList(teamId).toString());
         return teamUserRelationMapper.getTeamPartList(teamId);
     }
 }

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ytsssss.collaborationblog.domain.Team">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="is_public" jdbcType="INTEGER" property="isPublic" />
@@ -41,7 +41,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, describe, status, user_id, is_public, create_time, update_time
+    id, name, description, status, user_id, is_public, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.ytsssss.collaborationblog.example.TeamExample" resultMap="BaseResultMap">
     select
@@ -82,10 +82,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ytsssss.collaborationblog.domain.Team">
-    insert into team (id, name, describe, 
+    insert into team (id, name, description,
       status, user_id, is_public, 
       create_time, update_time)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
       #{status,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{isPublic,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -98,8 +98,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="describe != null">
-        describe,
+      <if test="description != null">
+        description,
       </if>
       <if test="status != null">
         status,
@@ -124,8 +124,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null">
-        #{describe,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -159,8 +159,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.describe != null">
-        describe = #{record.describe,jdbcType=VARCHAR},
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -186,7 +186,7 @@
     update team
     set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
-      describe = #{record.describe,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=BIGINT},
       is_public = #{record.isPublic,jdbcType=INTEGER},
@@ -202,8 +202,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null">
-        describe = #{describe,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -226,7 +226,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ytsssss.collaborationblog.domain.Team">
     update team
     set name = #{name,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=BIGINT},
       is_public = #{isPublic,jdbcType=INTEGER},

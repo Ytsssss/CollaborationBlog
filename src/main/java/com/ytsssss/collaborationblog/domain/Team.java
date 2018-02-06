@@ -2,6 +2,7 @@ package com.ytsssss.collaborationblog.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author 
@@ -11,7 +12,7 @@ public class Team implements Serializable {
 
     private String name;
 
-    private String describe;
+    private String description;
 
     private Integer status;
 
@@ -41,12 +42,12 @@ public class Team implements Serializable {
         this.name = name;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getStatus() {
@@ -90,58 +91,42 @@ public class Team implements Serializable {
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
+    public String toString() {
+        return "Team{" +
+          "id=" + id +
+          ", name='" + name + '\'' +
+          ", description='" + description + '\'' +
+          ", status=" + status +
+          ", userId=" + userId +
+          ", isPublic=" + isPublic +
+          ", createTime=" + createTime +
+          ", updateTime=" + updateTime +
+          '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (that == null) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Team other = (Team) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getDescribe() == null ? other.getDescribe() == null : this.getDescribe().equals(other.getDescribe()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getIsPublic() == null ? other.getIsPublic() == null : this.getIsPublic().equals(other.getIsPublic()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+        Team team = (Team) o;
+        return Objects.equals(id, team.id) &&
+          Objects.equals(name, team.name) &&
+          Objects.equals(description, team.description) &&
+          Objects.equals(status, team.status) &&
+          Objects.equals(userId, team.userId) &&
+          Objects.equals(isPublic, team.isPublic) &&
+          Objects.equals(createTime, team.createTime) &&
+          Objects.equals(updateTime, team.updateTime);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getDescribe() == null) ? 0 : getDescribe().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getIsPublic() == null) ? 0 : getIsPublic().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        return result;
-    }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", describe=").append(describe);
-        sb.append(", status=").append(status);
-        sb.append(", userId=").append(userId);
-        sb.append(", isPublic=").append(isPublic);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return Objects
+          .hash(id, name, description, status, userId, isPublic, createTime, updateTime);
     }
 }
