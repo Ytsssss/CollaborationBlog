@@ -29,7 +29,7 @@ public class RegisterController {
 
     @PostMapping(value = "register")
     public Object register(@RequestParam("accountId") String accountId,
-      @RequestParam("password")String password, @RequestParam("code") String  code,
+      @RequestParam("password")String password, @RequestParam("verifyCode") String code,
       @RequestParam("mailAddress") String mailAddress){
         Long userId = userService.register(accountId, password, code, mailAddress);
         if (userId.equals(-1L)){

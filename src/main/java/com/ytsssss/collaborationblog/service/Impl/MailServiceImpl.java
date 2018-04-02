@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ public class MailServiceImpl implements MailService{
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate redisTemplate;
 
     @Value("${mail.fromMail.addr}")
     private String from;
@@ -48,12 +49,12 @@ public class MailServiceImpl implements MailService{
     @Override
     public void saveRedisForMailCode(String code) {
         try {
-            stringRedisTemplate.opsForValue().set(GlobalConstant.MAILCODE,code);
+            ValueOperations<String, String> operations=redisTemplate.opsForValue();
+            operations.set(GlobalConstant.MAILCODE,code);
             logger.info("验证码为: "+code);
         }catch (Exception e){
             logger.error("将邮件验证码存入redis出现错误 "+e.getMessage());
         }
-
     }
 
 }
