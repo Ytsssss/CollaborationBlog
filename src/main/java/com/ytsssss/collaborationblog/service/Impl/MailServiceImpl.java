@@ -24,6 +24,8 @@ public class MailServiceImpl implements MailService{
     private JavaMailSender mailSender;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Value("${mail.fromMail.addr}")
     private String from;
@@ -49,8 +51,7 @@ public class MailServiceImpl implements MailService{
     @Override
     public void saveRedisForMailCode(String code) {
         try {
-            ValueOperations<String, String> operations=redisTemplate.opsForValue();
-            operations.set(GlobalConstant.MAILCODE,code);
+            stringRedisTemplate.opsForValue().set(GlobalConstant.MAILCODE,code);
             logger.info("验证码为: "+code);
         }catch (Exception e){
             logger.error("将邮件验证码存入redis出现错误 "+e.getMessage());

@@ -6,6 +6,7 @@ import com.ytsssss.collaborationblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,6 +20,12 @@ public class UserController {
     @GetMapping(value = "/getuserinfo/{id}")
     public Object getUserInfo(@PathVariable("id") Long userId){
         User user = userService.getUserInfo(userId);
+        return JsonResult.success(user);
+    }
+
+    @GetMapping(value = "user/info")
+    public Object userInfo(@RequestParam("token") String token){
+        User user = userService.getUserByToken(token);
         return JsonResult.success(user);
     }
 }
