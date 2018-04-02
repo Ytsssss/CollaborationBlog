@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService{
 
         User user = new User();
         user.setaccountId(accountId);
+        user.setAvatar("http://omfs7yds0.bkt.clouddn.com/timg.jpg");
         user.setEmail(mailAddress);
         user.setPassword(encode);
         user.setName(accountId);

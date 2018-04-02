@@ -23,8 +23,8 @@ public class UserController {
         return JsonResult.success(user);
     }
 
-    @GetMapping(value = "user/info")
-    public Object userInfo(@RequestParam("token") String token){
+    @GetMapping(value = "user/info/{token}")
+    public Object userInfo(@PathVariable("token") String token){
         User user = userService.getUserByToken(token);
         return JsonResult.success(user);
     }
