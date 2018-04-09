@@ -11,6 +11,7 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, content, create_time, is_comment, is_public, read_time, status, update_time, 
-    user_id
+    user_id, img
   </sql>
   <select id="selectByExample" parameterType="com.ytsssss.collaborationblog.example.BlogExample" resultMap="BaseResultMap">
     select
@@ -115,12 +116,12 @@
   <insert id="insert" parameterType="com.ytsssss.collaborationblog.domain.Blog">
     insert into blog (id, content, create_time, 
       is_comment, is_public, read_time, 
-      status, update_time, user_id
+      status, update_time, user_id, img
       )
     values (#{id,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{isComment,jdbcType=INTEGER}, #{isPublic,jdbcType=INTEGER}, #{readTime,jdbcType=BIGINT}, 
-      #{status,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}
-      )
+      #{status,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT},
+      #{img,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ytsssss.collaborationblog.domain.Blog">
     insert into blog
@@ -152,6 +153,9 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="img != null">
+        img,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -180,6 +184,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -266,6 +273,9 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -278,7 +288,8 @@
       read_time = #{readTime,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      user_id = #{userId,jdbcType=BIGINT}
+      user_id = #{userId,jdbcType=BIGINT},
+      img = #{img,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 

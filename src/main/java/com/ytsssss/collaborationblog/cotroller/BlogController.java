@@ -1,13 +1,20 @@
 package com.ytsssss.collaborationblog.cotroller;
 
 import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
+import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.json.JsonResult;
+import com.ytsssss.collaborationblog.mapper.BlogMapper;
 import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
+import com.ytsssss.collaborationblog.util.TimeUtil;
+import com.ytsssss.collaborationblog.vo.BlogDetailVO;
 import com.ytsssss.collaborationblog.vo.BlogVO;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.validation.Valid;
+
+import com.ytsssss.collaborationblog.vo.HomeBlogVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +35,8 @@ public class BlogController {
     private BlogService blogService;
     @Autowired
     private UserService userService;
+    @Resource
+    private BlogMapper blogMapper;
 
     /**
      * 新增博客
@@ -37,7 +46,7 @@ public class BlogController {
      * @return
      */
     @PostMapping(value = "/blog/add")
-    public Object addBlog(@Valid BlogVO blogVO, BindingResult bindingResult, @PathVariable("token") String token){
+    public Object addBlog(@Valid BlogVO blogVO, BindingResult bindingResult, @RequestParam("token") String token){
         if (bindingResult.hasErrors()) {
             logger.info(bindingResult.getFieldError().getDefaultMessage());
             return JsonResult.fail(GlobalResultStatus.PARAM_ERROR);
@@ -91,10 +100,27 @@ public class BlogController {
      * @param range
      * @return
      */
-    @GetMapping(value = "blog/getList")
-    public Object getList(@RequestParam("token") String token, @RequestParam("range") int range){
+    @GetMapping(value = "blog/getList/{range}/{token}")
+    public Object getList(@PathVariable("token") String token, @PathVariable("range") int range){
         User user = userService.getUserByToken(token);
         List<Long> blogList = blogService.getBlogList(user.getId(), range);
-        return JsonResult.success(blogList);
+        List<HomeBlogVO> homeBlogList = blogService.getHomeBlogList(blogList);
+        return JsonResult.success(homeBlogList);
+    }
+
+    @GetMapping(value = "blog/getDetail/{blogId}")
+    public Object getDetail(@PathVariable("blogId") Long blogId){
+        Blog blog = blogMapper.selectByPrimaryKey(blogId);
+        User user = userService.getUserInfo(blog.getUserId());
+        BlogDetailVO blogDetailVO = new BlogDetailVO();
+        blogDetailVO.setId(blogId);
+        blogDetailVO.setContent(blog.getContent());
+        blogDetailVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
+        blogDetailVO.setReadTime(blog.getReadTime());
+        blogDetailVO.setTitle("");
+        blogDetailVO.setUserId(blog.getUserId());
+        blogDetailVO.setUserAvatar(user.getAvatar());
+        blogDetailVO.setUserName(user.getName());
+        return JsonResult.success(blogDetailVO);
     }
 }

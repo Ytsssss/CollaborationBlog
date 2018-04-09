@@ -21,6 +21,12 @@ public class BlogLikeServiceImpl implements BlogLikeService{
     private static Logger logger = LoggerFactory.getLogger(BlogLikeServiceImpl.class);
     @Resource
     private BlogLikeMapper blogLikeMapper;
+
+    @Override
+    public int getBlogLikeCount(Long blogId) {
+        return blogLikeMapper.getBlogLikeCount(blogId);
+    }
+
     @Override
     public int addBlogLike(Long blogId, Long userId) {
         BlogLike blogLike = new BlogLike();

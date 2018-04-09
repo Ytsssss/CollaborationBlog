@@ -227,4 +227,10 @@
     from blog_like
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="getBlogLikeCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT count(*)
+    from blog_like
+    where blog_id = #{blogId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -15,6 +15,8 @@ public class Blog implements Serializable {
 
     private Integer isComment;
 
+    private String img;
+
     private Integer isPublic;
 
     private Long readTime;
@@ -97,6 +99,14 @@ public class Blog implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.ytsssss.collaborationblog.service;
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.vo.BlogVO;
+import com.ytsssss.collaborationblog.vo.HomeBlogVO;
+
 import java.util.List;
 
 /**
@@ -47,4 +49,11 @@ public interface BlogService {
      * @return
      */
     List<Blog> getBlogList(List<Long> blogIdList);
+
+    /**
+     * 通过blog id集合获取 首页blog集合
+     * @param blogIdList
+     * @return
+     */
+    List<HomeBlogVO> getHomeBlogList(List<Long> blogIdList);
 }

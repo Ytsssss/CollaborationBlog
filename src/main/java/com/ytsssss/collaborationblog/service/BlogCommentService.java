@@ -11,5 +11,6 @@ public interface BlogCommentService {
     int deleteComment(Long commentId);
     int addCommentLike(Long blogCommentId, Long userId);
     int cancelCommentLike(Long blogCommentId, Long userId);
+    int getBlogCommentCount(Long blogId);
     List<BlogComment> getBlogCommentList(Long blogId);
 }

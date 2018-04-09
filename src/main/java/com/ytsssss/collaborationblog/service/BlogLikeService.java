@@ -29,4 +29,11 @@ public interface BlogLikeService {
      * @return
      */
     List<Long> getBlogLikeList(Long userId);
+
+    /**
+     * 获取博客点赞数
+     * @param blogId
+     * @return
+     */
+    int getBlogLikeCount(Long blogId);
 }

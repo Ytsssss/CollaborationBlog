@@ -31,4 +31,6 @@ public interface BlogLikeMapper {
     int deleteByBlogAndUserId(@Param("blogId") Long blogId, @Param("userId") Long userId);
 
     List<Long> getBlogListByUserId(@Param("userId") Long userId);
+
+    int getBlogLikeCount(@Param("blogId") Long blogId);
 }

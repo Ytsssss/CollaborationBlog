@@ -62,6 +62,11 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     }
 
     @Override
+    public int getBlogCommentCount(Long blogId) {
+        return blogCommentMapper.getBlogCommentCount(blogId);
+    }
+
+    @Override
     public List<BlogComment> getBlogCommentList(Long blogId) {
         logger.info(blogCommentMapper.getBlogCommentList(blogId).toString());
         return blogCommentMapper.getBlogCommentList(blogId);
