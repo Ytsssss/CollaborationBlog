@@ -53,6 +53,5 @@ public class BlogCommentServiceImplTest {
 
     @Test
     public void getBlogCommentList(){
-        blogCommentService.getBlogCommentList(5L);
     }
 }

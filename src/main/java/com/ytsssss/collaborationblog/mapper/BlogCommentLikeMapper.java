@@ -29,4 +29,19 @@ public interface BlogCommentLikeMapper {
     int updateByPrimaryKey(BlogCommentLike record);
 
     int deleteByBlogCommentAndUserId(@Param("blogCommentId") Long blogCommentId, @Param("userId") Long userId);
+
+    /**
+     * 统计评论点赞数
+     * @param blogCommentId
+     * @return
+     */
+    int getCommentCount(@Param("blogCommentId") Long blogCommentId);
+
+    /**
+     * 判断该用户是否点赞
+     * @param blogCommentId
+     * @param userId
+     * @return
+     */
+    int isLikeComment(@Param("blogCommentId") Long blogCommentId, @Param("userId") Long userId);
 }

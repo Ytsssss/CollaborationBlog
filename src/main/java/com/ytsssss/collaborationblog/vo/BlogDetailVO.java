@@ -1,7 +1,5 @@
 package com.ytsssss.collaborationblog.vo;
 
-import java.util.Date;
-
 public class BlogDetailVO {
     private Long id;
 

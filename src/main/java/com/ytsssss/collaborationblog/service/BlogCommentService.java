@@ -1,6 +1,9 @@
 package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.domain.BlogComment;
+import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.vo.BlogCommentVO;
+
 import java.util.List;
 
 /**
@@ -12,5 +15,5 @@ public interface BlogCommentService {
     int addCommentLike(Long blogCommentId, Long userId);
     int cancelCommentLike(Long blogCommentId, Long userId);
     int getBlogCommentCount(Long blogId);
-    List<BlogComment> getBlogCommentList(Long blogId);
+    List<BlogCommentVO> getBlogCommentList(Long blogId, User user);
 }

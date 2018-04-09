@@ -1,8 +1,10 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
 import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
+import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.BlogComment;
 import com.ytsssss.collaborationblog.domain.BlogCommentLike;
+import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.mapper.BlogCommentLikeMapper;
 import com.ytsssss.collaborationblog.mapper.BlogCommentMapper;
@@ -10,8 +12,13 @@ import com.ytsssss.collaborationblog.service.BlogCommentService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+
+import com.ytsssss.collaborationblog.service.UserService;
+import com.ytsssss.collaborationblog.util.TimeUtil;
+import com.ytsssss.collaborationblog.vo.BlogCommentVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,6 +31,8 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     private BlogCommentMapper blogCommentMapper;
     @Resource
     private BlogCommentLikeMapper blogCommentLikeMapper;
+    @Autowired
+    private UserService userService;
 
     @Override
     public int addComment(Long blogId, Long userId, Long replyCommentId, Long replyUserId,
@@ -33,7 +42,7 @@ public class BlogCommentServiceImpl implements BlogCommentService{
         blogComment.setUserId(userId);
         blogComment.setContent(content);
         blogComment.setStatus(0);
-        if (replyCommentId != null || !"".equals(replyCommentId)){
+        if (replyCommentId != 0 || !replyCommentId.equals(0)){
             blogComment.setReplyCommentId(replyCommentId);
             blogComment.setReplyUserId(replyUserId);
         }
@@ -67,8 +76,36 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     }
 
     @Override
-    public List<BlogComment> getBlogCommentList(Long blogId) {
-        logger.info(blogCommentMapper.getBlogCommentList(blogId).toString());
-        return blogCommentMapper.getBlogCommentList(blogId);
+    public List<BlogCommentVO> getBlogCommentList(Long blogId, User currrentUser) {
+        //TODO 用户是否点赞评论
+        List<BlogComment> blogComments = blogCommentMapper.getBlogCommentList(blogId);
+        logger.info(blogComments.toString());
+        List<BlogCommentVO> blogCommentVOList = new ArrayList<>();
+        for (BlogComment blogComment : blogComments){
+            BlogCommentVO blogCommentVO = new BlogCommentVO();
+            User user = userService.getUserInfo(blogComment.getUserId());
+            if (blogComment.getReplyUserId() != 0){
+                User userReply = userService.getUserInfo(blogComment.getUserId());
+                blogCommentVO.setReplyUserName(userReply.getName());
+                blogCommentVO.setRelyUserAvatar(userReply.getAvatar());
+                blogCommentVO.setHasReply(true);
+            }else {
+                blogCommentVO.setHasReply(false);
+            }
+            //判断当前用户是否点赞该评论
+            boolean isLike = (blogCommentLikeMapper.isLikeComment(blogComment.getId(), currrentUser.getId()) == 1);
+            int likeCount = blogCommentLikeMapper.getCommentCount(blogComment.getId());
+            blogCommentVO.setId(blogComment.getId());
+            blogCommentVO.setCreateTime(TimeUtil.changeTimeToString(blogComment.getCreateTime()));
+            blogCommentVO.setLikeCount(likeCount);
+            blogCommentVO.setLike(isLike);
+            blogCommentVO.setComment(blogComment.getContent());
+            blogCommentVO.setUserId(blogComment.getUserId());
+            blogCommentVO.setUserAvatar(user.getAvatar());
+            blogCommentVO.setUserName(user.getName());
+            blogCommentVO.setReplyUserId(blogComment.getReplyUserId());
+            blogCommentVOList.add(blogCommentVO);
+        }
+        return blogCommentVOList;
     }
 }
