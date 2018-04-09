@@ -108,19 +108,14 @@ public class BlogController {
         return JsonResult.success(homeBlogList);
     }
 
+    /**
+     * 获取博客详情
+     * @param blogId
+     * @return
+     */
     @GetMapping(value = "blog/getDetail/{blogId}")
     public Object getDetail(@PathVariable("blogId") Long blogId){
-        Blog blog = blogMapper.selectByPrimaryKey(blogId);
-        User user = userService.getUserInfo(blog.getUserId());
-        BlogDetailVO blogDetailVO = new BlogDetailVO();
-        blogDetailVO.setId(blogId);
-        blogDetailVO.setContent(blog.getContent());
-        blogDetailVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
-        blogDetailVO.setReadTime(blog.getReadTime());
-        blogDetailVO.setTitle("");
-        blogDetailVO.setUserId(blog.getUserId());
-        blogDetailVO.setUserAvatar(user.getAvatar());
-        blogDetailVO.setUserName(user.getName());
-        return JsonResult.success(blogDetailVO);
+        logger.info(blogService.getBlogDetail(blogId).toString());
+        return JsonResult.success(blogService.getBlogDetail(blogId));
     }
 }

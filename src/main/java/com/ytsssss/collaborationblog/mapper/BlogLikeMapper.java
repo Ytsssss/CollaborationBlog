@@ -33,4 +33,12 @@ public interface BlogLikeMapper {
     List<Long> getBlogListByUserId(@Param("userId") Long userId);
 
     int getBlogLikeCount(@Param("blogId") Long blogId);
+
+    /**
+     * 判断是否点赞
+     * @param blogId
+     * @param userId
+     * @return
+     */
+    int isLike(@Param("blogId") Long blogId, @Param("userId") Long userId);
 }

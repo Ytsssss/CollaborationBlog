@@ -2,12 +2,16 @@ package com.ytsssss.collaborationblog.service.Impl;
 
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.mapper.BlogFavoriteMapper;
+import com.ytsssss.collaborationblog.mapper.BlogLikeMapper;
 import com.ytsssss.collaborationblog.mapper.BlogMapper;
+import com.ytsssss.collaborationblog.mapper.UserAttentionMapper;
 import com.ytsssss.collaborationblog.service.BlogCommentService;
 import com.ytsssss.collaborationblog.service.BlogLikeService;
 import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
+import com.ytsssss.collaborationblog.vo.BlogDetailVO;
 import com.ytsssss.collaborationblog.vo.BlogVO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +39,13 @@ public class BlogServiceImpl implements BlogService{
     private BlogCommentService blogCommentService;
     @Autowired
     private BlogLikeService blogLikeService;
+    @Resource
+    private BlogFavoriteMapper blogFavoriteMapper;
+    @Resource
+    private BlogLikeMapper blogLikeMapper;
+    @Resource
+    private UserAttentionMapper userAttentionMapper;
+
     @Override
     public Object addBlog(BlogVO blogVO, User user) {
         Date date = new Date();
@@ -46,6 +57,7 @@ public class BlogServiceImpl implements BlogService{
         blog.setStatus(blogVO.getStatus());
         blog.setImg(blogVO.getImg());
         blog.setReadTime(0L);
+        blog.setTitle(blogVO.getTitle());
         blog.setCreateTime(date);
         blog.setUpdateTime(date);
         logger.info(blog.toString());
@@ -60,6 +72,7 @@ public class BlogServiceImpl implements BlogService{
         blog.setContent(blogVO.getContent());
         blog.setIsComment(blogVO.getIsComment());
         blog.setIsPublic(blogVO.getIsPublic());
+        blog.setTitle(blogVO.getTitle());
         blog.setUpdateTime(date);
         logger.info(blog.toString());
 
@@ -113,7 +126,7 @@ public class BlogServiceImpl implements BlogService{
             homeBlogVO.setContent(blog.getContent());
             homeBlogVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
             homeBlogVO.setImg(blog.getImg());
-            homeBlogVO.setTitle("标题");
+            homeBlogVO.setTitle(blog.getTitle());
             homeBlogVO.setUpdateTime(TimeUtil.changeTimeToString(blog.getUpdateTime()));
             homeBlogVO.setUserId(blog.getUserId());
             homeBlogVO.setReadTime(blog.getReadTime());
@@ -126,4 +139,25 @@ public class BlogServiceImpl implements BlogService{
         return homeBlogList;
     }
 
+    @Override
+    public BlogDetailVO getBlogDetail(Long blogId) {
+        Blog blog = blogMapper.selectByPrimaryKey(blogId);
+        User user = userService.getUserInfo(blog.getUserId());
+        boolean isLike = (blogLikeMapper.isLike(blogId, user.getId()) == 1);
+        boolean isFollow = (userAttentionMapper.isAttention(user.getId(), blog.getUserId()) == 1);
+        boolean isFavorite = (blogFavoriteMapper.isFavorite(blogId, user.getId()) == 1);
+        BlogDetailVO blogDetailVO = new BlogDetailVO();
+        blogDetailVO.setId(blogId);
+        blogDetailVO.setContent(blog.getContent());
+        blogDetailVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
+        blogDetailVO.setReadTime(blog.getReadTime());
+        blogDetailVO.setTitle(blog.getTitle());
+        blogDetailVO.setUserId(blog.getUserId());
+        blogDetailVO.setUserAvatar(user.getAvatar());
+        blogDetailVO.setUserName(user.getName());
+        blogDetailVO.setFollow(isFollow);
+        blogDetailVO.setLike(isLike);
+        blogDetailVO.setFavorite(isFavorite);
+        return blogDetailVO;
+    }
 }

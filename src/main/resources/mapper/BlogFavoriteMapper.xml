@@ -227,4 +227,10 @@
     from blog_favorite
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="isFavorite" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(*)
+    from blog_favorite
+    where user_id = #{userId,jdbcType=BIGINT} and blog_id = #{blogId,jdbcType=BIGINT}
+  </select>
 </mapper>

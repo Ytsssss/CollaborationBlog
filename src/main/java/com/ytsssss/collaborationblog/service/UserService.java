@@ -1,7 +1,6 @@
 package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.domain.User;
-import com.ytsssss.collaborationblog.exception.GlobalException;
 
 /**
  * Create by Ytsssss on 2018/1/19 14:43

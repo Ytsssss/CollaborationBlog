@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Ytsssss
  */
 public class BlogVO {
-    @NotBlank(message = "博客内容必传")
+    @NotBlank(message = "博客内容不能为空")
     private String content;
 
     private Integer isComment;
@@ -18,7 +18,18 @@ public class BlogVO {
 
     private String img;
 
+    @NotBlank(message = "博客标题不能为空")
+    private String title;
+
     private static final long serialVersionUID = 1L;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getImg() {
         return img;

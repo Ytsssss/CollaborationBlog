@@ -2,6 +2,7 @@ package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.vo.BlogDetailVO;
 import com.ytsssss.collaborationblog.vo.BlogVO;
 import com.ytsssss.collaborationblog.vo.HomeBlogVO;
 
@@ -56,4 +57,11 @@ public interface BlogService {
      * @return
      */
     List<HomeBlogVO> getHomeBlogList(List<Long> blogIdList);
+
+    /**
+     * 查看特定的博客详情
+     * @param blogId
+     * @return
+     */
+    BlogDetailVO getBlogDetail(Long blogId);
 }

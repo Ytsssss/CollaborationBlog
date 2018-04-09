@@ -52,4 +52,12 @@ public interface UserAttentionMapper {
      * @return
      */
     List<Long> getUserFansList(@Param("attentionId") Long attentionId);
+
+    /**
+     * 判断是否关注
+     * @param userId
+     * @param attentionId
+     * @return
+     */
+    int isAttention(@Param("userId") Long userId, @Param("attentionId")Long attentionId);
 }

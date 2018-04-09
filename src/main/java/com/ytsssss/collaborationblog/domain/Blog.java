@@ -27,7 +27,17 @@ public class Blog implements Serializable {
 
     private Long userId;
 
+    private String title;
+
     private static final long serialVersionUID = 1L;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Long getId() {
         return id;

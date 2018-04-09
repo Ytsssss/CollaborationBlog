@@ -17,6 +17,36 @@ public class BlogDetailVO {
 
     private Long userId;
 
+    private boolean isLike;
+
+    private boolean isFollow;
+
+    private boolean isFavorite;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
+    }
+
     public Long getId() {
         return id;
     }
@@ -79,5 +109,22 @@ public class BlogDetailVO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "BlogDetailVO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", readTime=" + readTime +
+                ", userAvatar='" + userAvatar + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userId=" + userId +
+                ", isLike=" + isLike +
+                ", isFollow=" + isFollow +
+                ", isFavorite=" + isFavorite +
+                '}';
     }
 }

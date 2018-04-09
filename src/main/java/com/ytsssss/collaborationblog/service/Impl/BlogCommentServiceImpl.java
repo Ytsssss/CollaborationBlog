@@ -77,7 +77,6 @@ public class BlogCommentServiceImpl implements BlogCommentService{
 
     @Override
     public List<BlogCommentVO> getBlogCommentList(Long blogId, User currrentUser) {
-        //TODO 用户是否点赞评论
         List<BlogComment> blogComments = blogCommentMapper.getBlogCommentList(blogId);
         logger.info(blogComments.toString());
         List<BlogCommentVO> blogCommentVOList = new ArrayList<>();

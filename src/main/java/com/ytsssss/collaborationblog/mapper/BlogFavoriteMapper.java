@@ -31,4 +31,12 @@ public interface BlogFavoriteMapper {
     int deleteByBlogAndUserId(@Param("blogId") Long blogId, @Param("userId") Long userId);
 
     List<Long> getBlogListByUserId(@Param("userId") Long userId);
+
+    /**
+     * 判断是否收藏
+     * @param blogId
+     * @param userId
+     * @return
+     */
+    int isFavorite(@Param("blogId") Long blogId, @Param("userId") Long userId);
 }
