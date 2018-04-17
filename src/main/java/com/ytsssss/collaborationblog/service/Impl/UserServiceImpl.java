@@ -7,6 +7,8 @@ import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.RandomUtil;
 import com.ytsssss.collaborationblog.util.SHAUtil;
 import javax.annotation.Resource;
+
+import com.ytsssss.collaborationblog.vo.UserChangeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,5 +106,33 @@ public class UserServiceImpl implements UserService{
         User user = (User) redisTemplate.opsForValue().get(token);
         logger.info("用户信息为："+user.toString());
         return user;
+    }
+
+    @Override
+    public int changeUserInfo(UserChangeVO user, String token) {
+        logger.info(user.toString());
+        User newUser = getUserByToken(token);
+        newUser.setAvatar(user.getAvatar());
+        newUser.setName(user.getName());
+        newUser.setBirthday(user.getBirthday());
+        newUser.setSchool(user.getSchool());
+        newUser.setPhoneNumber(user.getPhoneNumber());
+        newUser.setLocation(user.getLocation());
+        newUser.setIntroduce(user.getIntroduce());
+
+        int code = userMapper.updateByPrimaryKeySelective(newUser);
+        updateUserByToken(newUser.getId(), token);
+        return code;
+    }
+
+    private void updateUserByToken(Long userId, String token){
+        User user = userMapper.selectByPrimaryKey(userId);
+        ValueOperations<String, User> operations=redisTemplate.opsForValue();
+        try {
+            operations.set(token, user);
+            logger.info("将用户信息存入redis成功！ token = "+token+"user = "+user.toString());
+        }catch (Exception e){
+            logger.error("将用户信息存入redis失败 "+e.getMessage());
+        }
     }
 }

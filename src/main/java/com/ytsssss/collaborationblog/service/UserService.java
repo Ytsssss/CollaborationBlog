@@ -1,6 +1,7 @@
 package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.vo.UserChangeVO;
 
 /**
  * Create by Ytsssss on 2018/1/19 14:43
@@ -53,4 +54,6 @@ public interface UserService {
      * @return
      */
     User getUserByToken(String token);
+
+    int changeUserInfo(UserChangeVO user, String token);
 }
