@@ -46,10 +46,11 @@ public class BlogController {
      * @return
      */
     @PostMapping(value = "/blog/add")
-    public Object addBlog(@Valid BlogVO blogVO, BindingResult bindingResult, @RequestParam("token") String token){
+    public Object addBlog(@Valid BlogVO blogVO, BindingResult bindingResult,
+                          @RequestParam("token") String token)throws Exception{
         if (bindingResult.hasErrors()) {
             logger.info(bindingResult.getFieldError().getDefaultMessage());
-            return JsonResult.fail(GlobalResultStatus.PARAM_ERROR);
+            return JsonResult.fail(GlobalResultStatus.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         User user = userService.getUserByToken(token);
         String value = blogService.addBlog(blogVO, user).toString();

@@ -63,4 +63,10 @@ public class JsonResult {
         map.put("data", object);
         return map;
     }
+    public static Object fail(Integer code, Object object){
+        Map<String, Object> map= new HashMap<String, Object>();
+        map.put("code", code);
+        map.put("data",object);
+        return map;
+    }
 }
