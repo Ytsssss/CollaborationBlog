@@ -1,14 +1,23 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
+import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
+import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.domain.UserAttention;
 import com.ytsssss.collaborationblog.domain.UserFriend;
+import com.ytsssss.collaborationblog.exception.GlobalException;
 import com.ytsssss.collaborationblog.mapper.UserAttentionMapper;
 import com.ytsssss.collaborationblog.mapper.UserFriendMapper;
 import com.ytsssss.collaborationblog.service.UserRelationService;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+
+import com.ytsssss.collaborationblog.service.UserService;
+import com.ytsssss.collaborationblog.vo.FollowAttListVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,6 +30,9 @@ public class UserRelationServiceImpl implements UserRelationService{
     private UserAttentionMapper userAttentionMapper;
     @Resource
     private UserFriendMapper userFriendMapper;
+    @Autowired
+    private UserService userService;
+
     @Override
     public int addUserAttention(Long userId, Long attentionId) {
         UserAttention userAttention = new UserAttention();
@@ -35,15 +47,25 @@ public class UserRelationServiceImpl implements UserRelationService{
     }
 
     @Override
-    public List<Long> getFansList(Long userId) {
+    public List<FollowAttListVO> getFansList(Long userId) throws Exception{
         logger.info(userAttentionMapper.getUserFansList(userId).toString());
-        return userAttentionMapper.getUserFansList(userId);
+        List<Long> fansIdList = userAttentionMapper.getUserFansList(userId);
+        if (fansIdList == null){
+            throw new GlobalException(GlobalResultStatus.PARAM_ERROR);
+        }
+        List<FollowAttListVO> followListVOList = getFollowAttVo(userId, fansIdList);
+        return followListVOList;
     }
 
     @Override
-    public List<Long> getAttentionList(Long userId) {
+    public List<FollowAttListVO> getAttentionList(Long userId) throws Exception{
         logger.info(userAttentionMapper.getUserAttentionList(userId).toString());
-        return userAttentionMapper.getUserAttentionList(userId);
+        List<Long> attentionIdList = userAttentionMapper.getUserAttentionList(userId);
+        if (attentionIdList == null){
+            throw new GlobalException(GlobalResultStatus.PARAM_ERROR);
+        }
+        List<FollowAttListVO> attListVOList = getFollowAttVo(userId, attentionIdList);
+        return attListVOList;
     }
 
     @Override
@@ -81,5 +103,23 @@ public class UserRelationServiceImpl implements UserRelationService{
     public List<Long> getQuestFriendList(Long userId) {
         logger.info(userFriendMapper.getQuestFriendList(userId).toString());
         return userFriendMapper.getQuestFriendList(userId);
+    }
+
+    private List<FollowAttListVO> getFollowAttVo(Long userId, List<Long> userList){
+        List<FollowAttListVO> followAttListVOList = new ArrayList<>();
+        for (Long id : userList){
+            User user = userService.getUserInfo(id);
+            FollowAttListVO followAttListVO = new FollowAttListVO();
+            followAttListVO.setUserId(id);
+            followAttListVO.setAvatar(user.getAvatar());
+            followAttListVO.setSchool(user.getSchool());
+            followAttListVO.setName(user.getName());
+            followAttListVO.setLocation(user.getLocation());
+            followAttListVO.setIntroduce(user.getIntroduce());
+            int isFollow = userAttentionMapper.isAttention(userId, id);
+            followAttListVO.setFollow(isFollow == 1);
+            followAttListVOList.add(followAttListVO);
+        }
+        return followAttListVOList;
     }
 }

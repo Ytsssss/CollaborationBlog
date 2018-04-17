@@ -1,7 +1,10 @@
 package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.vo.FollowAttListVO;
 import com.ytsssss.collaborationblog.vo.UserChangeVO;
+
+import java.util.List;
 
 /**
  * Create by Ytsssss on 2018/1/19 14:43
@@ -55,5 +58,12 @@ public interface UserService {
      */
     User getUserByToken(String token);
 
+    /**
+     * 修改用户信息
+     * @param user
+     * @param token
+     * @return
+     */
     int changeUserInfo(UserChangeVO user, String token);
+
 }

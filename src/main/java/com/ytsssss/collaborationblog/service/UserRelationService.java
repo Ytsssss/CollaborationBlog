@@ -1,5 +1,7 @@
 package com.ytsssss.collaborationblog.service;
 
+import com.ytsssss.collaborationblog.vo.FollowAttListVO;
+
 import java.util.List;
 
 /**
@@ -28,14 +30,14 @@ public interface UserRelationService {
      * @param userId
      * @return
      */
-    List<Long> getFansList(Long userId);
+    List<FollowAttListVO> getFansList(Long userId) throws Exception;
 
     /**
      * 获取关注列表
      * @param userId
      * @return
      */
-    List<Long> getAttentionList(Long userId);
+    List<FollowAttListVO> getAttentionList(Long userId) throws Exception;
 
     /**
      * 请求添加好友

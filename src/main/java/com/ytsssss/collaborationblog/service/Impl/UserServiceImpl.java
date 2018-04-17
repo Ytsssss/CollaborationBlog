@@ -8,6 +8,7 @@ import com.ytsssss.collaborationblog.util.RandomUtil;
 import com.ytsssss.collaborationblog.util.SHAUtil;
 import javax.annotation.Resource;
 
+import com.ytsssss.collaborationblog.vo.FollowAttListVO;
 import com.ytsssss.collaborationblog.vo.UserChangeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Create by Ytsssss on 2018/1/20 14:07

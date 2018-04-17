@@ -5,6 +5,7 @@ import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.service.UserRelationService;
 import com.ytsssss.collaborationblog.service.UserService;
+import com.ytsssss.collaborationblog.vo.FollowAttListVO;
 import com.ytsssss.collaborationblog.vo.UserChangeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Create by Ytsssss on 2018/1/19 14:43
@@ -60,6 +62,13 @@ public class UserController {
         return JsonResult.success();
     }
 
+    /**
+     * 修改用户信息
+     * @param token
+     * @param user
+     * @param bindingResult
+     * @return
+     */
     @PostMapping(value = "user/changeInfo")
     public Object changeUserInfo(@RequestParam("token") String token,
                                  @Valid UserChangeVO user, BindingResult bindingResult){
@@ -69,5 +78,31 @@ public class UserController {
         }
         userService.changeUserInfo(user,token);
         return JsonResult.success();
+    }
+
+    /**
+     * 获取粉丝列表
+     * @param token
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "user/getFollowList")
+    public Object getFollowList(@PathVariable("token") String token)throws Exception{
+        User user = userService.getUserByToken(token);
+        List<FollowAttListVO> followAttListVOList = userRelationService.getFansList(user.getId());
+        return JsonResult.success(followAttListVOList);
+    }
+
+    /**
+     * 获取关注列表
+     * @param token
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "user/getAttentionList")
+    public Object getAttentionList(@PathVariable("token") String token)throws Exception{
+        User user = userService.getUserByToken(token);
+        List<FollowAttListVO> followAttListVOList = userRelationService.getAttentionList(user.getId());
+        return JsonResult.success(followAttListVOList);
     }
 }
