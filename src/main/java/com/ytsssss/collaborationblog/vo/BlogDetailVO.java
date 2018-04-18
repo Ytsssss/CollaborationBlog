@@ -19,6 +19,8 @@ public class BlogDetailVO {
 
     private boolean isLike;
 
+    private int likeCount;
+
     private boolean isFollow;
 
     private boolean isFavorite;
@@ -111,6 +113,14 @@ public class BlogDetailVO {
         this.userId = userId;
     }
 
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     @Override
     public String toString() {
         return "BlogDetailVO{" +
@@ -123,6 +133,7 @@ public class BlogDetailVO {
                 ", userName='" + userName + '\'' +
                 ", userId=" + userId +
                 ", isLike=" + isLike +
+                ", likeCount=" + likeCount +
                 ", isFollow=" + isFollow +
                 ", isFavorite=" + isFavorite +
                 '}';

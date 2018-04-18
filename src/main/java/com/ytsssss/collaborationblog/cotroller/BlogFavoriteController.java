@@ -32,7 +32,7 @@ public class BlogFavoriteController {
     @PostMapping("/blogFavorite/add")
     public Object addBlogFavorite(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
-        int result = blogFavoriteService.addBlogFavorite(user.getId(), blogId);
+        int result = blogFavoriteService.addBlogFavorite(blogId, user.getId());
         if (result <1){
             return JsonResult.fail(GlobalResultStatus.BLOG_FAVORITE_ERROR);
         }
@@ -42,7 +42,7 @@ public class BlogFavoriteController {
     @PostMapping("/blogFavorite/cancel")
     public Object cancelBlogFavorite(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
-        int result = blogFavoriteService.cancelBlogFavorite(user.getId(), blogId);
+        int result = blogFavoriteService.cancelBlogFavorite(blogId, user.getId());
         if (result <1){
             return JsonResult.fail(GlobalResultStatus.BLOG_FAVORITE_CANCEL_ERROR);
         }

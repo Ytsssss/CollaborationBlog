@@ -158,6 +158,7 @@ public class BlogServiceImpl implements BlogService{
         blogDetailVO.setFollow(isFollow);
         blogDetailVO.setLike(isLike);
         blogDetailVO.setFavorite(isFavorite);
+        blogDetailVO.setLikeCount(blogLikeService.getBlogLikeCount(blogId));
         return blogDetailVO;
     }
 }

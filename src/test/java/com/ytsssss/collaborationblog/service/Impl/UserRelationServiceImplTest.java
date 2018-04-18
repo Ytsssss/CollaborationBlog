@@ -29,12 +29,12 @@ public class UserRelationServiceImplTest {
     }
 
     @Test
-    public void getFansList() {
+    public void getFansList() throws Exception{
         userRelationService.getFansList(10L);
     }
 
     @Test
-    public void getAttentionList() {
+    public void getAttentionList()throws Exception {
         userRelationService.getAttentionList(9L);
     }
 

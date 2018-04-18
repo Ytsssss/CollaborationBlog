@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -38,7 +39,7 @@ public class FileController {
      * @return
      */
     @PostMapping(value = "/file/upload")
-    public Object upload(String localFilePath ){
+    public Object upload(@RequestParam("localFilePath") String localFilePath ){
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone0());
 

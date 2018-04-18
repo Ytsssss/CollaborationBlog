@@ -32,7 +32,7 @@ public class BlogLikeController {
     @PostMapping("/blogLike/add")
     public Object addBlogLike(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
-        int result = blogLikeService.addBlogLike(user.getId(), blogId);
+        int result = blogLikeService.addBlogLike(blogId, user.getId());
         if (result <1){
             return JsonResult.fail(GlobalResultStatus.BLOG_LIKE_ERROR);
         }
@@ -42,7 +42,7 @@ public class BlogLikeController {
     @PostMapping("/blogLike/cancel")
     public Object cancelBlogLike(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
-        int result = blogLikeService.cancelBlogLike(user.getId(), blogId);
+        int result = blogLikeService.cancelBlogLike(blogId, user.getId());
         if (result <1){
             return JsonResult.fail(GlobalResultStatus.BLOG_LIKE_CANCEL_ERROR);
         }
