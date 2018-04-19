@@ -119,4 +119,18 @@ public class BlogController {
         logger.info(blogService.getBlogDetail(blogId).toString());
         return JsonResult.success(blogService.getBlogDetail(blogId));
     }
+
+    /**
+     * 更新阅读次数
+     * @param readTime
+     * @param blogId
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "blog/update/readTime")
+    public Object updateReadTime(@RequestParam("readTime") Long readTime,
+                                 @RequestParam("blogId") Long blogId)throws Exception{
+        blogService.updateReadTime(blogId, readTime);
+        return JsonResult.success();
+    }
 }

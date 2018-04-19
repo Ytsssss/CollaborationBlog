@@ -64,4 +64,11 @@ public interface BlogService {
      * @return
      */
     BlogDetailVO getBlogDetail(Long blogId);
+
+    /**
+     * 更新阅读次数
+     * @param readTime
+     * @return
+     */
+    int updateReadTime(Long blogId, Long readTime)throws Exception;
 }

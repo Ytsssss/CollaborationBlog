@@ -1,7 +1,9 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
+import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.exception.GlobalException;
 import com.ytsssss.collaborationblog.mapper.BlogFavoriteMapper;
 import com.ytsssss.collaborationblog.mapper.BlogLikeMapper;
 import com.ytsssss.collaborationblog.mapper.BlogMapper;
@@ -160,5 +162,17 @@ public class BlogServiceImpl implements BlogService{
         blogDetailVO.setFavorite(isFavorite);
         blogDetailVO.setLikeCount(blogLikeService.getBlogLikeCount(blogId));
         return blogDetailVO;
+    }
+
+    @Override
+    public int updateReadTime(Long blogId, Long readTime) throws Exception{
+        Blog blog = new Blog();
+        blog.setId(blogId);
+        blog.setReadTime(readTime);
+        int code = blogMapper.updateByPrimaryKeySelective(blog);
+        if (code!=1){
+            throw new GlobalException(GlobalResultStatus.PARAM_ERROR);
+        }
+        return code;
     }
 }
