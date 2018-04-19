@@ -30,6 +30,26 @@ public class BlogCommentVO {
 
     private boolean isLike;
 
+    private boolean showEdit;
+
+    private String textarea;
+
+    public String getTextarea() {
+        return textarea;
+    }
+
+    public void setTextarea(String textarea) {
+        this.textarea = textarea;
+    }
+
+    public boolean isShowEdit() {
+        return showEdit;
+    }
+
+    public void setShowEdit(boolean showEdit) {
+        this.showEdit = showEdit;
+    }
+
     public boolean isLike() {
         return isLike;
     }

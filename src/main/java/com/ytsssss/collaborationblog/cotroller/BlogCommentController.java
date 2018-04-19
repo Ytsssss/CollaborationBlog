@@ -43,10 +43,44 @@ public class BlogCommentController {
         return JsonResult.success();
     }
 
+    /**
+     * 获取博客评论列表
+     * @param blogId
+     * @param token
+     * @return
+     */
     @GetMapping("blogComment/getList/{token}/{blogId}")
     public Object getCommentList(@PathVariable("blogId") Long blogId, @PathVariable("token") String token){
         User user = userService.getUserByToken(token);
         List<BlogCommentVO> blogCommentVOList = blogCommentService.getBlogCommentList(blogId, user);
         return JsonResult.success(blogCommentVOList);
+    }
+
+    /**
+     * 点赞博客评论
+     * @param commentId
+     * @param token
+     * @return
+     */
+    @PostMapping(value = "blogComment/like")
+    public Object blogCommentLike(@RequestParam("commentId") Long commentId,
+                                  @RequestParam("token") String token){
+        User user = userService.getUserByToken(token);
+        blogCommentService.addCommentLike(commentId, user.getId());
+        return JsonResult.success();
+    }
+
+    /**
+     * 取消点赞博客评论
+     * @param commentId
+     * @param token
+     * @return
+     */
+    @PostMapping(value = "blogComment/cancelLike")
+    public Object blogCommentCancelLike(@RequestParam("commentId") Long commentId,
+                                        @RequestParam("token") String token){
+        User user = userService.getUserByToken(token);
+        blogCommentService.cancelCommentLike(commentId, user.getId());
+        return JsonResult.success();
     }
 }

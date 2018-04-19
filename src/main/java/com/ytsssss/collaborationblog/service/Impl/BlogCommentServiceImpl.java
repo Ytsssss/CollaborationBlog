@@ -103,6 +103,8 @@ public class BlogCommentServiceImpl implements BlogCommentService{
             blogCommentVO.setUserAvatar(user.getAvatar());
             blogCommentVO.setUserName(user.getName());
             blogCommentVO.setReplyUserId(blogComment.getReplyUserId());
+            blogCommentVO.setShowEdit(false);
+            blogCommentVO.setTextarea("");
             blogCommentVOList.add(blogCommentVO);
         }
         return blogCommentVOList;
