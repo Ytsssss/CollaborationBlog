@@ -1,5 +1,7 @@
 package com.ytsssss.collaborationblog.service;
 
+import com.ytsssss.collaborationblog.vo.BlogLikeVO;
+
 import java.util.List;
 
 /**
@@ -36,4 +38,11 @@ public interface BlogLikeService {
      * @return
      */
     int getBlogLikeCount(Long blogId);
+
+    /**
+     * 获取自己被赞的文章
+     * @param userId
+     * @return
+     */
+    List<BlogLikeVO> getBeLikeList(Long userId);
 }

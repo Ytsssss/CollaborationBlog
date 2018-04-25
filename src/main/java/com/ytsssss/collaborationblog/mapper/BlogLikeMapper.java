@@ -41,4 +41,11 @@ public interface BlogLikeMapper {
      * @return
      */
     int isLike(@Param("blogId") Long blogId, @Param("userId") Long userId);
+
+    /**
+     * 获取被点赞的文章列表
+     * @param blogIds
+     * @return
+     */
+    List<BlogLike> getBeLikeList(@Param("blogIds") List<Long> blogIds);
 }

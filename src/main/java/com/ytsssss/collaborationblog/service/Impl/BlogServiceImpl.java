@@ -1,5 +1,6 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
+import com.vdurmont.emoji.EmojiParser;
 import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
@@ -14,6 +15,7 @@ import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
 import com.ytsssss.collaborationblog.vo.BlogDetailVO;
+import com.ytsssss.collaborationblog.vo.BlogManageVO;
 import com.ytsssss.collaborationblog.vo.BlogVO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +55,7 @@ public class BlogServiceImpl implements BlogService{
         Date date = new Date();
         Blog blog = new Blog();
         blog.setUserId(user.getId());
-        blog.setContent(blogVO.getContent());
+        blog.setContent(EmojiParser.parseToHtmlDecimal(blogVO.getContent()));
         blog.setIsComment(blogVO.getIsComment());
         blog.setIsPublic(blogVO.getIsPublic());
         blog.setStatus(blogVO.getStatus());
@@ -62,6 +64,7 @@ public class BlogServiceImpl implements BlogService{
         blog.setTitle(blogVO.getTitle());
         blog.setCreateTime(date);
         blog.setUpdateTime(date);
+        blog.setPrecontent(blogVO.getPrecontent());
         logger.info(blog.toString());
 
         return blogMapper.insertSelective(blog);
@@ -71,10 +74,12 @@ public class BlogServiceImpl implements BlogService{
     public Object editBlog(BlogVO blogVO, User user) {
         Date date = new Date();
         Blog blog = new Blog();
-        blog.setContent(blogVO.getContent());
+        blog.setId(blogVO.getId());
+        blog.setContent(EmojiParser.parseToHtmlDecimal(blogVO.getContent()));
         blog.setIsComment(blogVO.getIsComment());
         blog.setIsPublic(blogVO.getIsPublic());
         blog.setTitle(blogVO.getTitle());
+        blog.setPrecontent(blogVO.getPrecontent());
         blog.setUpdateTime(date);
         logger.info(blog.toString());
 
@@ -84,6 +89,11 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public int deleteBlog(Long blogId) {
         return blogMapper.deleteByPrimaryKey(blogId);
+    }
+
+    @Override
+    public Blog getBlogInfo(Long blogId) {
+        return blogMapper.selectByPrimaryKey(blogId);
     }
 
     @Override
@@ -97,11 +107,11 @@ public class BlogServiceImpl implements BlogService{
             logger.info("查询结果为："+blogMapper.getMyBlogList(userId));
             return blogMapper.getMyBlogList(userId);
         }else if (range == 2){
-            logger.info("查询结果为："+blogMapper.getPublicBlobList(userId));
-            return blogMapper.getPublicBlobList(userId);
+            logger.info("查询结果为："+blogMapper.getPublicBlogList(userId));
+            return blogMapper.getPublicBlogList(userId);
         }else if (range == 3){
-            logger.info("查询结果为："+blogMapper.getFriendBlobList(userId));
-            return blogMapper.getFriendBlobList(userId);
+            logger.info("查询结果为："+blogMapper.getFriendBlogList(userId));
+            return blogMapper.getFriendBlogList(userId);
         }else if (range == 4){
             logger.info("查询结果为："+blogMapper.getDraftBlogList(userId));
             return blogMapper.getDraftBlogList(userId);
@@ -125,7 +135,7 @@ public class BlogServiceImpl implements BlogService{
             int likeCount = blogLikeService.getBlogLikeCount(blog.getId());
             HomeBlogVO homeBlogVO = new HomeBlogVO();
             homeBlogVO.setId(blog.getId());
-            homeBlogVO.setContent(blog.getContent());
+            homeBlogVO.setContent(EmojiParser.parseToUnicode(blog.getContent()));
             homeBlogVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
             homeBlogVO.setImg(blog.getImg());
             homeBlogVO.setTitle(blog.getTitle());
@@ -174,5 +184,29 @@ public class BlogServiceImpl implements BlogService{
             throw new GlobalException(GlobalResultStatus.PARAM_ERROR);
         }
         return code;
+    }
+
+    @Override
+    public List<BlogManageVO> searchByName(String name, int tag, String token) {
+        List<BlogManageVO> searchBlogVOList = new ArrayList<>();
+        List<BlogManageVO> searchByTitle = new ArrayList<>();
+        List<BlogManageVO> searchByUser = new ArrayList<>();
+        User user = userService.getUserByToken(token);
+        if (tag == 1){
+            searchByTitle = blogMapper.searchBlogByTitle(name, user.getId());
+            for (BlogManageVO blogManageVO : searchByTitle){
+                Long userId = blogManageVO.getUserId();
+                User blogUser = userService.getUserInfo(userId);
+                blogManageVO.setUserName(blogUser.getName());
+            }
+            return searchByTitle;
+        }else if (tag == 2){
+            searchByUser = blogMapper.searchBlogByName(name, user.getId());
+            return searchByUser;
+        }else {
+            searchBlogVOList.addAll(searchByTitle);
+            searchBlogVOList.addAll(searchByUser);
+            return searchBlogVOList;
+        }
     }
 }

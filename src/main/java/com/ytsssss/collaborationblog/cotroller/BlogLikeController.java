@@ -8,13 +8,12 @@ import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import java.util.Collections;
 import java.util.List;
+
+import com.ytsssss.collaborationblog.vo.BlogLikeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Create by Ytsssss on 2018/1/25 18:21
@@ -29,6 +28,12 @@ public class BlogLikeController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 博客点赞
+     * @param token
+     * @param blogId
+     * @return
+     */
     @PostMapping("/blogLike/add")
     public Object addBlogLike(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
@@ -39,6 +44,12 @@ public class BlogLikeController {
         return JsonResult.success();
     }
 
+    /**
+     * 取消博客点赞
+     * @param token
+     * @param blogId
+     * @return
+     */
     @PostMapping("/blogLike/cancel")
     public Object cancelBlogLike(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
@@ -49,6 +60,11 @@ public class BlogLikeController {
         return JsonResult.success();
     }
 
+    /**
+     * 获取用户点赞的列表
+     * @param token
+     * @return
+     */
     @GetMapping("/blogLike/getList")
     public Object getBlogLikeList(@RequestParam("token") String token){
         User user= userService.getUserByToken(token);
@@ -59,5 +75,17 @@ public class BlogLikeController {
             return JsonResult.success(Collections.emptyMap());
         }
         return JsonResult.success(blogService.getBlogList(likeList));
+    }
+
+    /**
+     * 获取点赞我文章列表
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "/blogLike/getBeLikeList/{token}")
+    public Object getBeLikeList(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<BlogLikeVO> blogLikeVOList = blogLikeService.getBeLikeList(user.getId());
+        return JsonResult.success(blogLikeVOList);
     }
 }

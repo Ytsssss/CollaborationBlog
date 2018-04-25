@@ -9,6 +9,7 @@ import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
 import com.ytsssss.collaborationblog.vo.BlogDetailVO;
+import com.ytsssss.collaborationblog.vo.BlogManageVO;
 import com.ytsssss.collaborationblog.vo.BlogVO;
 import java.util.List;
 import javax.annotation.Resource;
@@ -74,7 +75,7 @@ public class BlogController {
             return JsonResult.fail(GlobalResultStatus.PARAM_ERROR);
         }
         User user = userService.getUserByToken(token);
-        String value = blogService.addBlog(blogVO, user).toString();
+        String value = blogService.editBlog(blogVO, user).toString();
         if (value == null || "".equals(value)){
             return JsonResult.fail(GlobalResultStatus.BLOG_EDIT_ERROR);
         }
@@ -86,8 +87,8 @@ public class BlogController {
      * @param blogId
      * @return
      */
-    @PostMapping(value = "blog/delete/{blogId}")
-    public Object deleteBlog(@PathVariable("blogId") Long blogId){
+    @PostMapping(value = "blog/delete")
+    public Object deleteBlog(@RequestParam("blogId") Long blogId){
         int value = blogService.deleteBlog(blogId);
         if (value < 1){
             return JsonResult.fail(GlobalResultStatus.BLOG_DELETE_ERROR);
@@ -121,6 +122,16 @@ public class BlogController {
     }
 
     /**
+     * 获取博客信息（用于修改博客）
+     * @param blogId
+     * @return
+     */
+    @GetMapping(value = "blog/getBlog/{blogId}")
+    public Object getBlog(@PathVariable("blogId")Long blogId){
+        return JsonResult.success(blogService.getBlogInfo(blogId));
+    }
+
+    /**
      * 更新阅读次数
      * @param readTime
      * @param blogId
@@ -132,5 +143,19 @@ public class BlogController {
                                  @RequestParam("blogId") Long blogId)throws Exception{
         blogService.updateReadTime(blogId, readTime);
         return JsonResult.success();
+    }
+
+    /**
+     * 搜索blog
+     * @param name
+     * @param tag
+     * @param token
+     * @return
+     */
+    @PostMapping(value = "blog/searchByName")
+    public Object searchByName(@RequestParam("name") String name, @RequestParam("tag") int tag,
+                               @RequestParam("token") String token){
+        List<BlogManageVO> homeBlogVOS = blogService.searchByName(name, tag, token);
+        return JsonResult.success(homeBlogVOS);
     }
 }

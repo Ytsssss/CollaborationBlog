@@ -3,6 +3,7 @@ package com.ytsssss.collaborationblog.mapper;
 import com.ytsssss.collaborationblog.domain.BlogFavorite;
 import com.ytsssss.collaborationblog.example.BlogFavoriteExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface BlogFavoriteMapper {
@@ -39,4 +40,6 @@ public interface BlogFavoriteMapper {
      * @return
      */
     int isFavorite(@Param("blogId") Long blogId, @Param("userId") Long userId);
+
+    List<BlogFavorite> getBeFavoList(@Param("blogIds") List<Long> blogIds);
 }

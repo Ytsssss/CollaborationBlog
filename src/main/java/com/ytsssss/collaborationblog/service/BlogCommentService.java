@@ -3,6 +3,8 @@ package com.ytsssss.collaborationblog.service;
 import com.ytsssss.collaborationblog.domain.BlogComment;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.vo.BlogCommentVO;
+import com.ytsssss.collaborationblog.vo.CommentMessVO;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -16,4 +18,5 @@ public interface BlogCommentService {
     int cancelCommentLike(Long blogCommentId, Long userId);
     int getBlogCommentCount(Long blogId);
     List<BlogCommentVO> getBlogCommentList(Long blogId, User user);
+    List<CommentMessVO> getMessComment(Long userId);
 }

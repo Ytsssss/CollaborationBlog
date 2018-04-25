@@ -1,5 +1,7 @@
 package com.ytsssss.collaborationblog.service;
 
+import com.ytsssss.collaborationblog.vo.BlogFavoriteVO;
+
 import java.util.List;
 
 /**
@@ -29,4 +31,11 @@ public interface BlogFavoriteService {
      * @return
      */
     List<Long> getBlogFavoriteList(Long userId);
+
+    /**
+     * 获取收藏我文章的列表
+     * @param userId
+     * @return
+     */
+    List<BlogFavoriteVO> getBeFavoList(Long userId);
 }

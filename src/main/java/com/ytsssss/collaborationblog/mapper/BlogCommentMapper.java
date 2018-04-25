@@ -55,4 +55,11 @@ public interface BlogCommentMapper {
      * @return
      */
     int getBlogCommentCount(@Param("blogId")Long blogId);
+
+    /**
+     * 获取评论我的博客列表
+     * @param blogIds
+     * @return
+     */
+    List<BlogComment> getBeCommentList(@Param("blogIds") List<Long> blogIds);
 }

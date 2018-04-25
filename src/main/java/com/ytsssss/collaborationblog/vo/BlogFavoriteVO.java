@@ -11,12 +11,19 @@ public class BlogFavoriteVO implements Serializable {
 
     private Long blogId;
 
-    private Date createTime;
+    private String title;
+
+    private String userName;
+
+    private String avatar;
+
+    private String action;
+
+    private String createTime;
 
     private Date updateTime;
 
     private Long userId;
-
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -31,15 +38,47 @@ public class BlogFavoriteVO implements Serializable {
         return blogId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     public void setBlogId(Long blogId) {
         this.blogId = blogId;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

@@ -8,13 +8,12 @@ import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import java.util.Collections;
 import java.util.List;
+
+import com.ytsssss.collaborationblog.vo.BlogFavoriteVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Create by Ytsssss on 2018/1/25 14:58
@@ -29,6 +28,12 @@ public class BlogFavoriteController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 新增收藏
+     * @param token
+     * @param blogId
+     * @return
+     */
     @PostMapping("/blogFavorite/add")
     public Object addBlogFavorite(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
@@ -39,6 +44,12 @@ public class BlogFavoriteController {
         return JsonResult.success();
     }
 
+    /**
+     * 取消收藏
+     * @param token
+     * @param blogId
+     * @return
+     */
     @PostMapping("/blogFavorite/cancel")
     public Object cancelBlogFavorite(@RequestParam("token") String token, @RequestParam("blogId") Long blogId){
         User user= userService.getUserByToken(token);
@@ -49,6 +60,11 @@ public class BlogFavoriteController {
         return JsonResult.success();
     }
 
+    /**
+     * 获取我收藏的文章
+     * @param token
+     * @return
+     */
     @GetMapping("/blogFavorite/getList")
     public Object getBlogFavoriteList(@RequestParam("token") String token){
         User user= userService.getUserByToken(token);
@@ -59,5 +75,17 @@ public class BlogFavoriteController {
             return JsonResult.success(Collections.emptyMap());
         }
         return JsonResult.success(blogService.getBlogList(favoriteList));
+    }
+
+    /**
+     * 获取我的文章被收藏的列表
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "/blogFavorite/getBeFavoList/{token}")
+    public Object getBeLikeList(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<BlogFavoriteVO> blogLikeVOList = blogFavoriteService.getBeFavoList(user.getId());
+        return JsonResult.success(blogLikeVOList);
     }
 }

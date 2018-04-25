@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 
+import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
 import com.ytsssss.collaborationblog.vo.BlogCommentVO;
+import com.ytsssss.collaborationblog.vo.CommentMessVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     private BlogCommentLikeMapper blogCommentLikeMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private BlogService blogService;
 
     @Override
     public int addComment(Long blogId, Long userId, Long replyCommentId, Long replyUserId,
@@ -108,5 +112,28 @@ public class BlogCommentServiceImpl implements BlogCommentService{
             blogCommentVOList.add(blogCommentVO);
         }
         return blogCommentVOList;
+    }
+
+    @Override
+    public List<CommentMessVO> getMessComment(Long userId) {
+        List<Long> blogList = blogService.getBlogList(userId, 1);
+        List<BlogComment> blogCommentList = blogCommentMapper.getBeCommentList(blogList);
+        List<CommentMessVO> commentMessVOList = new ArrayList<>();
+        for (BlogComment blogComment : blogCommentList){
+            User user = userService.getUserInfo(blogComment.getUserId());
+            Blog blog = blogService.getBlogInfo(blogComment.getBlogId());
+            CommentMessVO comment = new CommentMessVO();
+            comment.setBlogId(blogComment.getBlogId());
+            comment.setCreateTime(TimeUtil.changeTimeToString(blogComment.getCreateTime()));
+            comment.setAction("评论");
+            comment.setContent(blogComment.getContent());
+            comment.setId(blogComment.getId());
+            comment.setUserId(blogComment.getUserId());
+            comment.setUserName(user.getName());
+            comment.setAvatar(user.getAvatar());
+            comment.setTitle(blog.getTitle());
+            commentMessVOList.add(comment);
+        }
+        return commentMessVOList;
     }
 }

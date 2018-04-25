@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +63,17 @@ public class FileController {
             logger.error(r.toString());
             return JsonResult.fail(r.toString());
         }
+    }
+
+    /**
+     * 获取七牛云上传token
+     * @return
+     */
+    @GetMapping(value = "/file/getToken")
+    public Object getToken(){
+        Auth auth = Auth.create(accessKey, secretKey);
+        String upToken = auth.uploadToken(bucketName);
+        return JsonResult.success(upToken);
     }
 
     protected String getUrl(String fileName) {

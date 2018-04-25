@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Ytsssss
  */
 public class BlogVO {
+    private Long id;
     @NotBlank(message = "博客内容不能为空")
     private String content;
 
@@ -18,10 +19,19 @@ public class BlogVO {
 
     private String img;
 
+    private String precontent;
     @NotBlank(message = "博客标题不能为空")
     private String title;
 
     private static final long serialVersionUID = 1L;
+
+    public String getPrecontent() {
+        return precontent;
+    }
+
+    public void setPrecontent(String precontent) {
+        this.precontent = precontent;
+    }
 
     public String getTitle() {
         return title;
@@ -33,6 +43,14 @@ public class BlogVO {
 
     public String getImg() {
         return img;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setImg(String img) {

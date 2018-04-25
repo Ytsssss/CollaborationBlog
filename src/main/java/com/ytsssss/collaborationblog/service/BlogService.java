@@ -3,6 +3,7 @@ package com.ytsssss.collaborationblog.service;
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
 import com.ytsssss.collaborationblog.vo.BlogDetailVO;
+import com.ytsssss.collaborationblog.vo.BlogManageVO;
 import com.ytsssss.collaborationblog.vo.BlogVO;
 import com.ytsssss.collaborationblog.vo.HomeBlogVO;
 
@@ -36,6 +37,12 @@ public interface BlogService {
      */
     int deleteBlog(Long blogId);
 
+    /**
+     * 获取博客信息
+     * @param blogId
+     * @return
+     */
+    Blog getBlogInfo(Long blogId);
     /**
      *  查看博客列表
      * @param userId
@@ -71,4 +78,12 @@ public interface BlogService {
      * @return
      */
     int updateReadTime(Long blogId, Long readTime)throws Exception;
+
+    /**
+     * 通过名称查询博客列表
+     * @param name
+     * @param tag
+     * @return
+     */
+    List<BlogManageVO> searchByName(String name, int tag, String token);
 }

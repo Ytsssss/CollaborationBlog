@@ -13,6 +13,16 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="img" jdbcType="VARCHAR" property="img" />
     <result column="title" jdbcType="VARCHAR" property="title"/>
+    <result column="precontent" jdbcType="VARCHAR" property="precontent"/>
+  </resultMap>
+  <resultMap id="SearchResultMap" type="com.ytsssss.collaborationblog.vo.BlogManageVO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="read_time" jdbcType="BIGINT" property="readTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title"/>
+    <result column="name" jdbcType="VARCHAR" property="userName"/>
+    <result column="precontent" jdbcType="VARCHAR" property="precontent"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +84,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, content, create_time, is_comment, is_public, read_time, status, update_time, 
-    user_id, img, title
+    user_id, img, title, precontent
   </sql>
   <select id="selectByExample" parameterType="com.ytsssss.collaborationblog.example.BlogExample" resultMap="BaseResultMap">
     select
@@ -117,12 +127,12 @@
   <insert id="insert" parameterType="com.ytsssss.collaborationblog.domain.Blog">
     insert into blog (id, content, create_time, 
       is_comment, is_public, read_time, 
-      status, update_time, user_id, img, title
+      status, update_time, user_id, img, title, precontent
       )
     values (#{id,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{isComment,jdbcType=INTEGER}, #{isPublic,jdbcType=INTEGER}, #{readTime,jdbcType=BIGINT}, 
       #{status,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT},
-      #{img,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+      #{img,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{precontent,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ytsssss.collaborationblog.domain.Blog">
     insert into blog
@@ -160,6 +170,9 @@
       <if test="title != null">
         title,
       </if>
+      <if test="precontent != null">
+        precontent,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -194,6 +207,9 @@
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="precontent != null">
+        #{precontent,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -284,7 +300,10 @@
         img = #{img,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
-        img = #{title,jdbcType=VARCHAR},
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="precontent != null">
+        precontent = #{precontent,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -300,7 +319,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=BIGINT},
       img = #{img,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR}
+      title = #{title,jdbcType=VARCHAR},
+      precontent = #{precontent,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -331,7 +351,21 @@
     from blog
     where id in
     <foreach collection="blogIdList" index="index" item="blogId" open="(" separator="," close=")">
-        #{blogId, jdbcType=BIGINT}
-    </foreach>
+    #{blogId, jdbcType=BIGINT}
+  </foreach>
+  </select>
+
+  <select id="searchBlogByTitle" resultMap="SearchResultMap">
+    select id, title, user_id, read_time, create_time
+    from blog
+    where title like "%"#{title, jdbcType=VARCHAR}"%" and status = 0 and user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="searchBlogByName" resultMap="SearchResultMap">
+    select blog.id as id, blog.title as title, blog.user_id as user_id,
+    blog.read_time as read_time, blog.create_time as create_time, user.name as name
+    from blog
+    left join user on blog.user_id = user.id
+    where user.name like "%"#{userName, jdbcType=VARCHAR}"%" and status = 0 and blog.user_id = #{userId,jdbcType=BIGINT}
   </select>
 </mapper>

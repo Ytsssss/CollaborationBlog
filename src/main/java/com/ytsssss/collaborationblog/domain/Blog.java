@@ -29,7 +29,35 @@ public class Blog implements Serializable {
 
     private String title;
 
+    private String precontent;
+
     private static final long serialVersionUID = 1L;
+
+    public String getPrecontent() {
+        return precontent;
+    }
+
+    public void setPrecontent(String precontent) {
+        this.precontent = precontent;
+    }
+
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", createTime=" + createTime +
+                ", isComment=" + isComment +
+                ", img='" + img + '\'' +
+                ", isPublic=" + isPublic +
+                ", readTime=" + readTime +
+                ", status=" + status +
+                ", updateTime=" + updateTime +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", precontent='" + precontent + '\'' +
+                '}';
+    }
 
     public String getTitle() {
         return title;
@@ -158,23 +186,4 @@ public class Blog implements Serializable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", content=").append(content);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", isComment=").append(isComment);
-        sb.append(", isPublic=").append(isPublic);
-        sb.append(", readTime=").append(readTime);
-        sb.append(", status=").append(status);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", userId=").append(userId);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

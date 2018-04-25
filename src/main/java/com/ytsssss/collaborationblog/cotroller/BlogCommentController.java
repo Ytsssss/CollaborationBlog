@@ -6,6 +6,7 @@ import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.service.BlogCommentService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.vo.BlogCommentVO;
+import com.ytsssss.collaborationblog.vo.CommentMessVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,5 +83,17 @@ public class BlogCommentController {
         User user = userService.getUserByToken(token);
         blogCommentService.cancelCommentLike(commentId, user.getId());
         return JsonResult.success();
+    }
+
+    /**
+     * 获取我的文章被评论的列表
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "/blogComment/getBeCommentList/{token}")
+    public Object getBeCommentList(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<CommentMessVO> commentMessVOList = blogCommentService.getMessComment(user.getId());
+        return JsonResult.success(commentMessVOList);
     }
 }
