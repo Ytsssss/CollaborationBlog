@@ -10,11 +10,14 @@ import com.ytsssss.collaborationblog.mapper.UserFriendMapper;
 import com.ytsssss.collaborationblog.service.UserRelationService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 
 import com.ytsssss.collaborationblog.service.UserService;
+import com.ytsssss.collaborationblog.util.TimeUtil;
 import com.ytsssss.collaborationblog.vo.FollowAttListVO;
+import com.ytsssss.collaborationblog.vo.UserFriendVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +82,6 @@ public class UserRelationServiceImpl implements UserRelationService{
 
     @Override
     public int deleteUserFriend(Long userId, Long friendId) {
-        userFriendMapper.deleteByUserAndFriendId(friendId, userId);
         return userFriendMapper.deleteByUserAndFriendId(userId, friendId);
     }
 
@@ -87,22 +89,45 @@ public class UserRelationServiceImpl implements UserRelationService{
     public int confirmUserFriend(Long userId, Long friendId, int status) {
         UserFriend userFriend = new UserFriend();
         userFriend.setFriendId(userId);
-        userFriend.setUserId(friendId);
         userFriend.setStatus(0);
+        userFriend.setCreateTime(new Date());
+        userFriend.setUpdateTime(new Date());
+        userFriend.setUserId(friendId);
         userFriendMapper.insertSelective(userFriend);
         return userFriendMapper.confirmUserFriend(userId, friendId, status);
     }
 
     @Override
-    public List<Long> getUserFriendList(Long userId) {
-        logger.info(userFriendMapper.getUserFriendList(userId).toString());
-        return userFriendMapper.getUserFriendList(userId);
+    public List<UserFriendVO> getUserFriendList(Long userId) {
+        List<Long> friendList = userFriendMapper.getUserFriendList(userId);
+        logger.info(friendList.toString());
+        List<UserFriendVO> userFriendVOList = getFriendList(friendList, 0);
+        return userFriendVOList;
     }
 
     @Override
-    public List<Long> getQuestFriendList(Long userId) {
-        logger.info(userFriendMapper.getQuestFriendList(userId).toString());
-        return userFriendMapper.getQuestFriendList(userId);
+    public List<UserFriendVO> getQuestFriendList(Long userId) {
+        List<Long> questIdList = userFriendMapper.getQuestFriendList(userId);
+        logger.info(questIdList.toString());
+        List<UserFriendVO> userFriendVOList = getFriendList(questIdList, 1);
+        return userFriendVOList;
+    }
+
+    @Override
+    public List<FollowAttListVO> getEachList(Long userId) throws Exception {
+        logger.info(userAttentionMapper.getUserAttentionList(userId).toString());
+        List<Long> attentionIdList = userAttentionMapper.getUserAttentionList(userId);
+        if (attentionIdList == null){
+            throw new GlobalException(GlobalResultStatus.PARAM_ERROR);
+        }
+        List<FollowAttListVO> attListVOList = getFollowAttVo(userId, attentionIdList);
+        List<FollowAttListVO> eachList = new ArrayList<>();
+        for (FollowAttListVO followAttListVO : attListVOList){
+            if (followAttListVO.isFollow()){
+                eachList.add(followAttListVO);
+            }
+        }
+        return eachList;
     }
 
     private List<FollowAttListVO> getFollowAttVo(Long userId, List<Long> userList){
@@ -121,5 +146,31 @@ public class UserRelationServiceImpl implements UserRelationService{
             followAttListVOList.add(followAttListVO);
         }
         return followAttListVOList;
+    }
+
+    private List<UserFriendVO> getFriendList(List<Long> list, int type){
+        List<UserFriendVO> userFriendVOList = new ArrayList<>();
+        for (Long id : list){
+            UserFriendVO userFriendVO = new UserFriendVO();
+            UserFriend userFriend = userFriendMapper.selectByPrimaryKey(id);
+            userFriendVO.setFriendId(userFriend.getFriendId());
+            userFriendVO.setCreateTime(TimeUtil.changeTimeToString(userFriend.getCreateTime()));
+            userFriendVO.setId(id);
+            userFriendVO.setStatus(userFriend.getStatus());
+            userFriendVO.setUserId(userFriend.getUserId());
+            Long friendId;
+            if (type == 0){
+                friendId = userFriend.getFriendId();
+            }else{
+                friendId = userFriend.getUserId();
+            }
+            User user = userService.getUserInfo(friendId);
+            userFriendVO.setAvatar(user.getAvatar());
+            userFriendVO.setUserName(user.getName());
+            userFriendVO.setSchool(user.getSchool());
+            userFriendVO.setIntroduce(user.getIntroduce());
+            userFriendVOList.add(userFriendVO);
+        }
+        return userFriendVOList;
     }
 }

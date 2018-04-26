@@ -1,6 +1,7 @@
 package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.vo.FollowAttListVO;
+import com.ytsssss.collaborationblog.vo.UserFriendVO;
 
 import java.util.List;
 
@@ -69,12 +70,20 @@ public interface UserRelationService {
      * @param userId
      * @return
      */
-    List<Long> getUserFriendList(Long userId);
+    List<UserFriendVO> getUserFriendList(Long userId);
 
     /**
      * 获取请求添加好友列表
      * @param userId
      * @return
      */
-    List<Long> getQuestFriendList(Long userId);
+    List<UserFriendVO> getQuestFriendList(Long userId);
+
+    /**
+     * 获取互相关注的列表
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    List<FollowAttListVO> getEachList(Long userId) throws Exception;
 }

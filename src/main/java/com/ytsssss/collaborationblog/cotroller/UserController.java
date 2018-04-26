@@ -2,16 +2,19 @@ package com.ytsssss.collaborationblog.cotroller;
 
 import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.domain.UserFriend;
 import com.ytsssss.collaborationblog.json.JsonResult;
 import com.ytsssss.collaborationblog.service.UserRelationService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.vo.FollowAttListVO;
 import com.ytsssss.collaborationblog.vo.UserChangeVO;
+import com.ytsssss.collaborationblog.vo.UserFriendVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.nio.cs.US_ASCII;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -86,7 +89,7 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @GetMapping(value = "user/getFollowList")
+    @GetMapping(value = "user/getFollowList/{token}")
     public Object getFollowList(@PathVariable("token") String token)throws Exception{
         User user = userService.getUserByToken(token);
         List<FollowAttListVO> followAttListVOList = userRelationService.getFansList(user.getId());
@@ -99,10 +102,87 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @GetMapping(value = "user/getAttentionList")
+    @GetMapping(value = "user/getAttentionList/{token}")
     public Object getAttentionList(@PathVariable("token") String token)throws Exception{
         User user = userService.getUserByToken(token);
         List<FollowAttListVO> followAttListVOList = userRelationService.getAttentionList(user.getId());
         return JsonResult.success(followAttListVOList);
+    }
+
+    /**
+     * 获取相互关注的列表
+     * @param token
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "user/getEachList/{token}")
+    public Object getEachList(@PathVariable("token") String token)throws Exception{
+        User user = userService.getUserByToken(token);
+        List<FollowAttListVO> followAttListVOList = userRelationService.getEachList(user.getId());
+        return JsonResult.success(followAttListVOList);
+    }
+
+    /**
+     * 添加朋友
+     * @param token
+     * @param userId
+     * @return
+     */
+    @PostMapping(value = "friend/add")
+    public Object addFriend(@RequestParam("token") String token, @RequestParam("userId") Long userId){
+        User user = userService.getUserByToken(token);
+        userRelationService.addUserFriend(user.getId(), userId);
+        return JsonResult.success();
+    }
+
+    /**
+     * 删除朋友
+     * @param token
+     * @param userId
+     * @return
+     */
+    @PostMapping(value = "friend/delete")
+    public Object deleteFriend(@RequestParam("token") String token, @RequestParam("userId") Long userId){
+        User user = userService.getUserByToken(token);
+        userRelationService.deleteUserFriend(user.getId(), userId);
+        return JsonResult.success();
+    }
+
+    /**
+     * 确定好友关系（status = 0表示确定加好友，status = 2表示拒绝）
+     * @param token
+     * @param userId
+     * @param status
+     * @return
+     */
+    @PostMapping(value = "friend/confirm")
+    public Object confirmFriend(@RequestParam("token") String token, @RequestParam("userId") Long userId, @RequestParam("status") int status){
+        User user = userService.getUserByToken(token);
+        userRelationService.confirmUserFriend(userId, user.getId(), status);
+        return JsonResult.success();
+    }
+
+    /**
+     * 获取好友请求列表
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "friend/getQuestList/{token}")
+    public Object getQuestList(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<UserFriendVO> userFriendVOList = userRelationService.getQuestFriendList(user.getId());
+        return JsonResult.success(userFriendVOList);
+    }
+
+    /**
+     * 获取好友列表
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "friend/getList/{token}")
+    public Object getFriendList(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<UserFriendVO> userFriendList= userRelationService.getUserFriendList(user.getId());
+        return JsonResult.success(userFriendList);
     }
 }

@@ -57,7 +57,7 @@ public interface UserFriendMapper {
      * @param userId
      * @return
      */
-    @Select("select friend_id from user_friend where user_id = #{userId} and status=0")
+    @Select("select id from user_friend where user_id = #{userId} and status=0")
     List<Long> getUserFriendList(@Param("userId") Long userId);
 
     /**
