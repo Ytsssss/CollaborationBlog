@@ -102,6 +102,7 @@ public class UserRelationServiceImpl implements UserRelationService{
         List<Long> friendList = userFriendMapper.getUserFriendList(userId);
         logger.info(friendList.toString());
         List<UserFriendVO> userFriendVOList = getFriendList(friendList, 0);
+        logger.info(userFriendVOList.toString());
         return userFriendVOList;
     }
 
@@ -115,14 +116,14 @@ public class UserRelationServiceImpl implements UserRelationService{
 
     @Override
     public List<FollowAttListVO> getEachList(Long userId) throws Exception {
-        logger.info(userAttentionMapper.getUserAttentionList(userId).toString());
-        List<Long> attentionIdList = userAttentionMapper.getUserAttentionList(userId);
-        if (attentionIdList == null){
+        logger.info(userAttentionMapper.getUserFansList(userId).toString());
+        List<Long> fansIdList = userAttentionMapper.getUserFansList(userId);
+        if (fansIdList == null){
             throw new GlobalException(GlobalResultStatus.PARAM_ERROR);
         }
-        List<FollowAttListVO> attListVOList = getFollowAttVo(userId, attentionIdList);
+        List<FollowAttListVO> followListVOList = getFollowAttVo(userId, fansIdList);
         List<FollowAttListVO> eachList = new ArrayList<>();
-        for (FollowAttListVO followAttListVO : attListVOList){
+        for (FollowAttListVO followAttListVO : followListVOList){
             if (followAttListVO.isFollow()){
                 eachList.add(followAttListVO);
             }
@@ -161,8 +162,12 @@ public class UserRelationServiceImpl implements UserRelationService{
             Long friendId;
             if (type == 0){
                 friendId = userFriend.getFriendId();
+                userFriendVO.setShowEdit(false);
+                userFriendVO.setTextarea("");
             }else{
                 friendId = userFriend.getUserId();
+                userFriendVO.setAgree(false);
+                userFriendVO.setConfirm(false);
             }
             User user = userService.getUserInfo(friendId);
             userFriendVO.setAvatar(user.getAvatar());

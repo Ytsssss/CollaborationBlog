@@ -70,7 +70,7 @@ public interface BlogService {
      * @param blogId
      * @return
      */
-    BlogDetailVO getBlogDetail(Long blogId);
+    BlogDetailVO getBlogDetail(Long blogId, Long userId);
 
     /**
      * 更新阅读次数

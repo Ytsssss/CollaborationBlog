@@ -25,6 +25,46 @@ public class UserFriendVO implements Serializable {
 
     private String introduce;
 
+    private boolean isConfirm;
+
+    private boolean showEdit;
+
+    private String textarea;
+
+    private boolean isAgree;
+
+    public String getTextarea() {
+        return textarea;
+    }
+
+    public void setTextarea(String textarea) {
+        this.textarea = textarea;
+    }
+
+    public boolean isShowEdit() {
+        return showEdit;
+    }
+
+    public void setShowEdit(boolean showEdit) {
+        this.showEdit = showEdit;
+    }
+
+    public boolean isConfirm() {
+        return isConfirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        isConfirm = confirm;
+    }
+
+    public boolean isAgree() {
+        return isAgree;
+    }
+
+    public void setAgree(boolean agree) {
+        isAgree = agree;
+    }
+
     public Long getId() {
         return id;
     }

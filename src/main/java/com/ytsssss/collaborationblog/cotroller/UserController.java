@@ -136,13 +136,26 @@ public class UserController {
     }
 
     /**
-     * 删除朋友
+     * 删除朋友（拒绝加为好友）
      * @param token
      * @param userId
      * @return
      */
     @PostMapping(value = "friend/delete")
     public Object deleteFriend(@RequestParam("token") String token, @RequestParam("userId") Long userId){
+        User user = userService.getUserByToken(token);
+        userRelationService.deleteUserFriend(userId, user.getId());
+        return JsonResult.success();
+    }
+
+    /**
+     * 删除好友
+     * @param token
+     * @param userId
+     * @return
+     */
+    @PostMapping(value = "friend/del")
+    public Object delFriend(@RequestParam("token") String token, @RequestParam("userId") Long userId){
         User user = userService.getUserByToken(token);
         userRelationService.deleteUserFriend(user.getId(), userId);
         return JsonResult.success();

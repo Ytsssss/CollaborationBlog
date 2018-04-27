@@ -115,10 +115,11 @@ public class BlogController {
      * @param blogId
      * @return
      */
-    @GetMapping(value = "blog/getDetail/{blogId}")
-    public Object getDetail(@PathVariable("blogId") Long blogId){
-        logger.info(blogService.getBlogDetail(blogId).toString());
-        return JsonResult.success(blogService.getBlogDetail(blogId));
+    @GetMapping(value = "blog/getDetail/{blogId}/{token}")
+    public Object getDetail(@PathVariable("blogId") Long blogId, @PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        logger.info(blogService.getBlogDetail(blogId, user.getId()).toString());
+        return JsonResult.success(blogService.getBlogDetail(blogId, user.getId()));
     }
 
     /**

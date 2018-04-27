@@ -152,12 +152,12 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public BlogDetailVO getBlogDetail(Long blogId) {
+    public BlogDetailVO getBlogDetail(Long blogId,Long userId) {
         Blog blog = blogMapper.selectByPrimaryKey(blogId);
         User user = userService.getUserInfo(blog.getUserId());
-        boolean isLike = (blogLikeMapper.isLike(blogId, user.getId()) == 1);
-        boolean isFollow = (userAttentionMapper.isAttention(user.getId(), blog.getUserId()) == 1);
-        boolean isFavorite = (blogFavoriteMapper.isFavorite(blogId, user.getId()) == 1);
+        boolean isLike = (blogLikeMapper.isLike(blogId, userId) == 1);
+        boolean isFollow = (userAttentionMapper.isAttention(userId, blog.getUserId()) == 1);
+        boolean isFavorite = (blogFavoriteMapper.isFavorite(blogId, userId) == 1);
         BlogDetailVO blogDetailVO = new BlogDetailVO();
         blogDetailVO.setId(blogId);
         blogDetailVO.setContent(blog.getContent());
