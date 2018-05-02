@@ -368,4 +368,10 @@
     left join user on blog.user_id = user.id
     where user.name like "%"#{userName, jdbcType=VARCHAR}"%" and status = 0 and blog.user_id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="getBlogCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(*)
+    from blog
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -2,10 +2,7 @@ package com.ytsssss.collaborationblog.service;
 
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
-import com.ytsssss.collaborationblog.vo.BlogDetailVO;
-import com.ytsssss.collaborationblog.vo.BlogManageVO;
-import com.ytsssss.collaborationblog.vo.BlogVO;
-import com.ytsssss.collaborationblog.vo.HomeBlogVO;
+import com.ytsssss.collaborationblog.vo.*;
 
 import java.util.List;
 
@@ -86,4 +83,18 @@ public interface BlogService {
      * @return
      */
     List<BlogManageVO> searchByName(String name, int tag, String token);
+
+    /**
+     * 获取用户文章，关注等数量
+     * @param userId
+     * @return
+     */
+    UserCountVO getUserCount(Long userId);
+
+    /**
+     * 获取用户发布的文章数
+     * @param userId
+     * @return
+     */
+    int getBlogCountByUser(Long userId);
 }

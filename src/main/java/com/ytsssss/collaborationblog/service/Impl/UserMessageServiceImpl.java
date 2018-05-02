@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -50,20 +51,25 @@ public class UserMessageServiceImpl implements UserMessageService{
     public List<UserMessageVO> getUserMessage(Long friendId) {
         List<UserMessageVO> userMessageVOS = new ArrayList<>();
         List<UserMessage> userMessageList = userMessageMapper.getUserMessage(friendId);
-        for (UserMessage userMessage : userMessageList){
-            UserMessageVO userMessageVO = new UserMessageVO();
-            userMessageVO.setCreateTime(TimeUtil.changeTimeToString(userMessage.getCreateTime()));
-            userMessageVO.setUserId(userMessage.getUserId());
-            userMessageVO.setId(userMessage.getId());
-            userMessageVO.setContent(userMessage.getContent());
-            userMessageVO.setFriendId(userMessage.getFriendId());
-            User user = userService.getUserInfo(userMessage.getUserId());
-            userMessageVO.setUserName(user.getName());
-            userMessageVO.setAvatar(user.getAvatar());
-            userMessageVO.setTextarea("");
-            userMessageVO.setShowEdit(false);
-            userMessageVOS.add(userMessageVO);
+        if (userMessageList.size() != 0){
+            for (UserMessage userMessage : userMessageList){
+                UserMessageVO userMessageVO = new UserMessageVO();
+                userMessageVO.setCreateTime(TimeUtil.changeTimeToString(userMessage.getCreateTime()));
+                userMessageVO.setUserId(userMessage.getUserId());
+                userMessageVO.setId(userMessage.getId());
+                userMessageVO.setContent(userMessage.getContent());
+                userMessageVO.setFriendId(userMessage.getFriendId());
+                User user = userService.getUserInfo(userMessage.getUserId());
+                userMessageVO.setUserName(user.getName());
+                userMessageVO.setAvatar(user.getAvatar());
+                userMessageVO.setTextarea("");
+                userMessageVO.setShowEdit(false);
+                userMessageVOS.add(userMessageVO);
+            }
+        }else {
+            userMessageVOS = Collections.emptyList();
         }
+
         return userMessageVOS;
     }
 }

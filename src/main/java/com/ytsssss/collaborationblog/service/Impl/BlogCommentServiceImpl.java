@@ -10,6 +10,7 @@ import com.ytsssss.collaborationblog.mapper.BlogCommentLikeMapper;
 import com.ytsssss.collaborationblog.mapper.BlogCommentMapper;
 import com.ytsssss.collaborationblog.service.BlogCommentService;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Resource;
 
@@ -117,22 +118,26 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     @Override
     public List<CommentMessVO> getMessComment(Long userId) {
         List<Long> blogList = blogService.getBlogList(userId, 1);
-        List<BlogComment> blogCommentList = blogCommentMapper.getBeCommentList(blogList);
         List<CommentMessVO> commentMessVOList = new ArrayList<>();
-        for (BlogComment blogComment : blogCommentList){
-            User user = userService.getUserInfo(blogComment.getUserId());
-            Blog blog = blogService.getBlogInfo(blogComment.getBlogId());
-            CommentMessVO comment = new CommentMessVO();
-            comment.setBlogId(blogComment.getBlogId());
-            comment.setCreateTime(TimeUtil.changeTimeToString(blogComment.getCreateTime()));
-            comment.setAction("评论");
-            comment.setContent(blogComment.getContent());
-            comment.setId(blogComment.getId());
-            comment.setUserId(blogComment.getUserId());
-            comment.setUserName(user.getName());
-            comment.setAvatar(user.getAvatar());
-            comment.setTitle(blog.getTitle());
-            commentMessVOList.add(comment);
+        if (blogList.size() != 0){
+            List<BlogComment> blogCommentList = blogCommentMapper.getBeCommentList(blogList);
+            for (BlogComment blogComment : blogCommentList){
+                User user = userService.getUserInfo(blogComment.getUserId());
+                Blog blog = blogService.getBlogInfo(blogComment.getBlogId());
+                CommentMessVO comment = new CommentMessVO();
+                comment.setBlogId(blogComment.getBlogId());
+                comment.setCreateTime(TimeUtil.changeTimeToString(blogComment.getCreateTime()));
+                comment.setAction("评论");
+                comment.setContent(blogComment.getContent());
+                comment.setId(blogComment.getId());
+                comment.setUserId(blogComment.getUserId());
+                comment.setUserName(user.getName());
+                comment.setAvatar(user.getAvatar());
+                comment.setTitle(blog.getTitle());
+                commentMessVOList.add(comment);
+            }
+        }else {
+            commentMessVOList = Collections.emptyList();
         }
         return commentMessVOList;
     }

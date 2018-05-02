@@ -14,16 +14,14 @@ import com.ytsssss.collaborationblog.service.BlogLikeService;
 import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
-import com.ytsssss.collaborationblog.vo.BlogDetailVO;
-import com.ytsssss.collaborationblog.vo.BlogManageVO;
-import com.ytsssss.collaborationblog.vo.BlogVO;
+import com.ytsssss.collaborationblog.vo.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 
-import com.ytsssss.collaborationblog.vo.HomeBlogVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,25 +126,29 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public List<HomeBlogVO> getHomeBlogList(List<Long> blogIdList){
         List<HomeBlogVO> homeBlogList = new ArrayList<HomeBlogVO>();
-        List<Blog> blogList = getBlogList(blogIdList);
-        for (Blog blog: blogList){
-            User user = userService.getUserInfo(blog.getUserId());
-            int commentCount = blogCommentService.getBlogCommentCount(blog.getId());
-            int likeCount = blogLikeService.getBlogLikeCount(blog.getId());
-            HomeBlogVO homeBlogVO = new HomeBlogVO();
-            homeBlogVO.setId(blog.getId());
-            homeBlogVO.setContent(EmojiParser.parseToUnicode(blog.getContent()));
-            homeBlogVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
-            homeBlogVO.setImg(blog.getImg());
-            homeBlogVO.setTitle(blog.getTitle());
-            homeBlogVO.setUpdateTime(TimeUtil.changeTimeToString(blog.getUpdateTime()));
-            homeBlogVO.setUserId(blog.getUserId());
-            homeBlogVO.setReadTime(blog.getReadTime());
-            homeBlogVO.setCommentCount(commentCount);
-            homeBlogVO.setUserName(user.getName());
-            homeBlogVO.setUserAvatar(user.getAvatar());
-            homeBlogVO.setLikeCount(likeCount);
-            homeBlogList.add(homeBlogVO);
+        if (blogIdList.size() != 0){
+            List<Blog> blogList = getBlogList(blogIdList);
+            for (Blog blog: blogList){
+                User user = userService.getUserInfo(blog.getUserId());
+                int commentCount = blogCommentService.getBlogCommentCount(blog.getId());
+                int likeCount = blogLikeService.getBlogLikeCount(blog.getId());
+                HomeBlogVO homeBlogVO = new HomeBlogVO();
+                homeBlogVO.setId(blog.getId());
+                homeBlogVO.setContent(EmojiParser.parseToUnicode(blog.getContent()));
+                homeBlogVO.setCreateTime(TimeUtil.changeTimeToString(blog.getCreateTime()));
+                homeBlogVO.setImg(blog.getImg());
+                homeBlogVO.setTitle(blog.getTitle());
+                homeBlogVO.setUpdateTime(TimeUtil.changeTimeToString(blog.getUpdateTime()));
+                homeBlogVO.setUserId(blog.getUserId());
+                homeBlogVO.setReadTime(blog.getReadTime());
+                homeBlogVO.setCommentCount(commentCount);
+                homeBlogVO.setUserName(user.getName());
+                homeBlogVO.setUserAvatar(user.getAvatar());
+                homeBlogVO.setLikeCount(likeCount);
+                homeBlogList.add(homeBlogVO);
+            }
+        }else {
+            homeBlogList = Collections.emptyList();
         }
         return homeBlogList;
     }
@@ -208,5 +210,22 @@ public class BlogServiceImpl implements BlogService{
             searchBlogVOList.addAll(searchByUser);
             return searchBlogVOList;
         }
+    }
+
+    @Override
+    public UserCountVO getUserCount(Long userId) {
+        UserCountVO userCountVO = new UserCountVO();
+        userCountVO.setBlogCount(blogMapper.getBlogCount(userId));
+        userCountVO.setLikeCount(blogLikeMapper.getLikeCountByUser(userId));
+        userCountVO.setFollowCount(userAttentionMapper.getFollowCount(userId));
+        userCountVO.setFansCount(userAttentionMapper.getFansCount(userId));
+        logger.info(userCountVO.toString());
+        return userCountVO;
+    }
+
+    @Override
+    public int getBlogCountByUser(Long userId) {
+        int blogCount = blogMapper.getBlogCount(userId);
+        return blogCount;
     }
 }

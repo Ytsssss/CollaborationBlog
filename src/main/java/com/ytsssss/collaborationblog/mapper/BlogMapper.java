@@ -45,4 +45,6 @@ public interface BlogMapper {
     List<BlogManageVO> searchBlogByTitle(@Param("title") String title, @Param("userId") Long userId);
 
     List<BlogManageVO> searchBlogByName(@Param("userName") String userName, @Param("userId") Long userId);
+
+    int getBlogCount(@Param("userId") Long userId);
 }

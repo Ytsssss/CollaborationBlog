@@ -48,4 +48,6 @@ public interface BlogLikeMapper {
      * @return
      */
     List<BlogLike> getBeLikeList(@Param("blogIds") List<Long> blogIds);
+
+    int getLikeCountByUser(@Param("userId") Long userId);
 }

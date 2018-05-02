@@ -234,4 +234,16 @@
     from user_attention
     where attention_id = #{attentionId,jdbcType=BIGINT} and user_id = #{userId,jdbcType=BIGINT}
   </select>
+
+  <select id="getFansCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(*)
+    from user_attention
+    where attention_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getFollowCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(*)
+    from user_attention
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -7,6 +7,7 @@ import com.ytsssss.collaborationblog.mapper.BlogLikeMapper;
 import com.ytsssss.collaborationblog.service.BlogLikeService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -41,21 +42,25 @@ public class BlogLikeServiceImpl implements BlogLikeService{
     @Override
     public List<BlogLikeVO> getBeLikeList(Long userId) {
         List<Long> blogList = blogService.getBlogList(userId, 1);
-        List<BlogLike> blogLikeList = blogLikeMapper.getBeLikeList(blogList);
         List<BlogLikeVO> blogLikeVOList = new ArrayList<>();
-        for (BlogLike blogLike : blogLikeList){
-            User user = userService.getUserInfo(blogLike.getUserId());
-            Blog blog = blogService.getBlogInfo(blogLike.getBlogId());
-            BlogLikeVO blogLikeVO = new BlogLikeVO();
-            blogLikeVO.setBlogId(blogLike.getBlogId());
-            blogLikeVO.setCreateTime(TimeUtil.changeTimeToString(blogLike.getCreateTime()));
-            blogLikeVO.setAction("点赞");
-            blogLikeVO.setId(blogLike.getId());
-            blogLikeVO.setUserId(blogLike.getUserId());
-            blogLikeVO.setUserName(user.getName());
-            blogLikeVO.setAvatar(user.getAvatar());
-            blogLikeVO.setTitle(blog.getTitle());
-            blogLikeVOList.add(blogLikeVO);
+        if (blogList.size() != 0){
+            List<BlogLike> blogLikeList = blogLikeMapper.getBeLikeList(blogList);
+            for (BlogLike blogLike : blogLikeList){
+                User user = userService.getUserInfo(blogLike.getUserId());
+                Blog blog = blogService.getBlogInfo(blogLike.getBlogId());
+                BlogLikeVO blogLikeVO = new BlogLikeVO();
+                blogLikeVO.setBlogId(blogLike.getBlogId());
+                blogLikeVO.setCreateTime(TimeUtil.changeTimeToString(blogLike.getCreateTime()));
+                blogLikeVO.setAction("点赞");
+                blogLikeVO.setId(blogLike.getId());
+                blogLikeVO.setUserId(blogLike.getUserId());
+                blogLikeVO.setUserName(user.getName());
+                blogLikeVO.setAvatar(user.getAvatar());
+                blogLikeVO.setTitle(blog.getTitle());
+                blogLikeVOList.add(blogLikeVO);
+            }
+        }else {
+            blogLikeVOList = Collections.emptyList();
         }
         return blogLikeVOList;
     }

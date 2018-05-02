@@ -7,6 +7,7 @@ import com.ytsssss.collaborationblog.mapper.BlogFavoriteMapper;
 import com.ytsssss.collaborationblog.service.BlogFavoriteService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -61,22 +62,27 @@ public class BlogFavoriteServiceImpl implements BlogFavoriteService{
     @Override
     public List<BlogFavoriteVO> getBeFavoList(Long userId) {
         List<Long> blogList = blogService.getBlogList(userId, 1);
-        List<BlogFavorite> blogFavoriteList = blogFavoriteMapper.getBeFavoList(blogList);
         List<BlogFavoriteVO> blogFavoriteVOList = new ArrayList<>();
-        for (BlogFavorite blogLike : blogFavoriteList){
-            User user = userService.getUserInfo(blogLike.getUserId());
-            Blog blog = blogService.getBlogInfo(blogLike.getBlogId());
-            BlogFavoriteVO blogFavoriteVO = new BlogFavoriteVO();
-            blogFavoriteVO.setBlogId(blogLike.getBlogId());
-            blogFavoriteVO.setCreateTime(TimeUtil.changeTimeToString(blogLike.getCreateTime()));
-            blogFavoriteVO.setAction("收藏");
-            blogFavoriteVO.setId(blogLike.getId());
-            blogFavoriteVO.setUserId(blogLike.getUserId());
-            blogFavoriteVO.setUserName(user.getName());
-            blogFavoriteVO.setAvatar(user.getAvatar());
-            blogFavoriteVO.setTitle(blog.getTitle());
-            blogFavoriteVOList.add(blogFavoriteVO);
+        if (blogList.size() != 0){
+            List<BlogFavorite> blogFavoriteList = blogFavoriteMapper.getBeFavoList(blogList);
+            for (BlogFavorite blogLike : blogFavoriteList){
+                User user = userService.getUserInfo(blogLike.getUserId());
+                Blog blog = blogService.getBlogInfo(blogLike.getBlogId());
+                BlogFavoriteVO blogFavoriteVO = new BlogFavoriteVO();
+                blogFavoriteVO.setBlogId(blogLike.getBlogId());
+                blogFavoriteVO.setCreateTime(TimeUtil.changeTimeToString(blogLike.getCreateTime()));
+                blogFavoriteVO.setAction("收藏");
+                blogFavoriteVO.setId(blogLike.getId());
+                blogFavoriteVO.setUserId(blogLike.getUserId());
+                blogFavoriteVO.setUserName(user.getName());
+                blogFavoriteVO.setAvatar(user.getAvatar());
+                blogFavoriteVO.setTitle(blog.getTitle());
+                blogFavoriteVOList.add(blogFavoriteVO);
+            }
+        }else {
+            blogFavoriteVOList = Collections.emptyList();
         }
+
         return blogFavoriteVOList;
     }
 }

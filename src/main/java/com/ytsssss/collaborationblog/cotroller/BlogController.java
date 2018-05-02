@@ -8,14 +8,12 @@ import com.ytsssss.collaborationblog.mapper.BlogMapper;
 import com.ytsssss.collaborationblog.service.BlogService;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
-import com.ytsssss.collaborationblog.vo.BlogDetailVO;
-import com.ytsssss.collaborationblog.vo.BlogManageVO;
-import com.ytsssss.collaborationblog.vo.BlogVO;
+import com.ytsssss.collaborationblog.vo.*;
+
 import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import com.ytsssss.collaborationblog.vo.HomeBlogVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,5 +156,28 @@ public class BlogController {
                                @RequestParam("token") String token){
         List<BlogManageVO> homeBlogVOS = blogService.searchByName(name, tag, token);
         return JsonResult.success(homeBlogVOS);
+    }
+
+    /**
+     * 获取用户的文章，关注，粉丝数量
+     * @param userId
+     * @return
+     */
+    @GetMapping(value = "blog/getUserCount/{userId}")
+    public Object getUserCount(@PathVariable("userId") Long userId){
+        UserCountVO userCountVO = blogService.getUserCount(userId);
+        return JsonResult.success(userCountVO);
+    }
+
+    /**
+     * 获取当前用户的文章，关注，粉丝数量
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "blog/getOwnUserCount/{token}")
+    public Object getOwnUserCount(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        UserCountVO userCountVO = blogService.getUserCount(user.getId());
+        return JsonResult.success(userCountVO);
     }
 }

@@ -249,4 +249,10 @@
       #{blogId, jdbcType=BIGINT}
     </foreach>
   </select>
+
+  <select id="getLikeCountByUser" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT count(*)
+    from blog_like
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

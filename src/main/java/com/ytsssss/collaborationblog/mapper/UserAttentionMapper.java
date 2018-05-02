@@ -60,4 +60,18 @@ public interface UserAttentionMapper {
      * @return
      */
     int isAttention(@Param("userId") Long userId, @Param("attentionId")Long attentionId);
+
+    /**
+     * 获取粉丝数
+     * @param userId
+     * @return
+     */
+    int getFansCount(@Param("userId") Long userId);
+
+    /**
+     * 获取关注数
+     * @param userId
+     * @return
+     */
+    int getFollowCount(@Param("userId") Long userId);
 }
