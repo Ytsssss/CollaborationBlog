@@ -103,4 +103,11 @@ public interface BlogService {
      * @return
      */
     List<Blog> getHotBlogList();
+
+    /**
+     * 获取用户近七天发布的文章数
+     * @param userId
+     * @return
+     */
+    List<BlogWeekVO> getWeekBlogList(Long userId);
 }

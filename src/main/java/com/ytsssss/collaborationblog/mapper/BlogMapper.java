@@ -5,6 +5,7 @@ import com.ytsssss.collaborationblog.example.BlogExample;
 import java.util.List;
 
 import com.ytsssss.collaborationblog.vo.BlogManageVO;
+import com.ytsssss.collaborationblog.vo.BlogWeekVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -49,4 +50,6 @@ public interface BlogMapper {
     List<BlogManageVO> searchBlogByName(@Param("userName") String userName, @Param("userId") Long userId);
 
     int getBlogCount(@Param("userId") Long userId);
+
+    List<BlogWeekVO> getWeekBlogList(@Param("userId") Long userId);
 }

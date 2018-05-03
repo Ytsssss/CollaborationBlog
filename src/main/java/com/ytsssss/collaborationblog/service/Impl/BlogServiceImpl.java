@@ -14,6 +14,7 @@ import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.TimeUtil;
 import com.ytsssss.collaborationblog.vo.*;
 
+import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -242,6 +243,30 @@ public class BlogServiceImpl implements BlogService{
         return blogList;
     }
 
+    @Override
+    public List<BlogWeekVO> getWeekBlogList(Long userId) {
+        List<BlogWeekVO> blogWeekVOList = blogMapper.getWeekBlogList(userId);
+        List<BlogWeekVO> weekList = new ArrayList<>();
+        for (int i=1; i<8; i++){
+            BlogWeekVO blogWeekVO = new BlogWeekVO();
+            int tag = 0;
+            for (BlogWeekVO blogWeekVO1 : blogWeekVOList){
+                if (blogWeekVO1.getTime().equals(TimeUtil.getCurDate(i))){
+                    blogWeekVO.setCount(blogWeekVO1.getCount());
+                    blogWeekVO.setTime(blogWeekVO1.getTime());
+                    tag = 1;
+                    break;
+                }
+            }
+            if (tag == 0){
+                blogWeekVO.setTime(TimeUtil.getCurDate(i));
+                blogWeekVO.setCount(0);
+            }
+            weekList.add(blogWeekVO);
+        }
+        return weekList;
+    }
+
     private void insertUserRole(List<Long> friendIds, Long blogId){
         for (Long friendId : friendIds){
             UserRoleRelation userRoleRelation = new UserRoleRelation();
@@ -249,7 +274,7 @@ public class BlogServiceImpl implements BlogService{
             userRoleRelation.setCreateTime(new Date());
             userRoleRelation.setUserId(friendId);
             userRoleRelation.setUpdateTime(new Date());
-            userRoleRelation.setUserRole(1);//好友可以编辑
+            userRoleRelation.setUserRole(1);//好友可以查看
             userRoleRelationMapper.insertSelective(userRoleRelation);
         }
     }

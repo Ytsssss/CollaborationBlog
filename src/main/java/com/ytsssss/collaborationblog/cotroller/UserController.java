@@ -214,4 +214,5 @@ public class UserController {
         List<FollowAttListVO> userList = userService.getUserRecommend(user.getId(), pageNum);
         return JsonResult.success(userList);
     }
+
 }

@@ -24,6 +24,10 @@
     <result column="name" jdbcType="VARCHAR" property="userName"/>
     <result column="precontent" jdbcType="VARCHAR" property="precontent"/>
   </resultMap>
+  <resultMap id="countWeekMap" type="com.ytsssss.collaborationblog.vo.BlogWeekVO">
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="time" jdbcType="VARCHAR" property="time"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -381,5 +385,12 @@
     where <![CDATA[DATE_SUB(CURDATE(), INTERVAL 7 DAY)<=create_time]]>
     order by read_time DESC
     limit 5 offset 0
+  </select>
+
+  <select id="getWeekBlogList" parameterType="java.lang.Long" resultMap="countWeekMap">
+    select DATE_FORMAT(create_time,'%Y-%m-%d') as time ,count(*) as count
+    FROM blog
+    where DATE_FORMAT(create_time,'%Y-%m-%d')>DATE_SUB(curdate(),INTERVAL 7 DAY) and status=0 and user_id = #{userId,jdbcType=BIGINT}
+    GROUP BY  DATE_FORMAT(create_time,'%Y-%m-%d')
   </select>
 </mapper>

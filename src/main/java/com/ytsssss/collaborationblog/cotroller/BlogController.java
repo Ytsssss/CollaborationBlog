@@ -190,4 +190,16 @@ public class BlogController {
         List<Blog> hotBlogList = blogService.getHotBlogList();
         return JsonResult.success(hotBlogList);
     }
+
+    /**
+     * 获取一周内的文章发布数
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "blog/getWeekList/{token}")
+    public Object getWeekBlogList(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<BlogWeekVO> blogWeekVOList = blogService.getWeekBlogList(user.getId());
+        return JsonResult.success(blogWeekVOList);
+    }
 }
