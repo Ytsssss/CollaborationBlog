@@ -66,4 +66,11 @@ public interface UserService {
      */
     int changeUserInfo(UserChangeVO user, String token);
 
+    /**
+     * 获取推荐列表
+     * @param userId
+     * @param pageNum
+     * @return
+     */
+    List<FollowAttListVO> getUserRecommend(Long userId, int pageNum);
 }

@@ -27,6 +27,11 @@ server:
 mybatis:
   mapperLocations: mapper/**.xml
   typeAliasesPackage: com.ytsssss.collaborationblog.domain
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
 mail:
   fromMail:
      addr: 2014141462313@stu.scu.edu.cn

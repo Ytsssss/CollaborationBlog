@@ -374,4 +374,12 @@
     from blog
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
+  
+  <select id="getHotBlogList" resultMap="BaseResultMap">
+    select id, title, read_time
+    from blog
+    where <![CDATA[DATE_SUB(CURDATE(), INTERVAL 7 DAY)<=create_time]]>
+    order by read_time DESC
+    limit 5 offset 0
+  </select>
 </mapper>

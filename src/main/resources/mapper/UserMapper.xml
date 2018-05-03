@@ -364,4 +364,10 @@
     from user
     where where account_id = #{accountId,jdbcType=VARCHAR} and password = #{password}
   </select>
+
+  <select id="getRecommend" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select u.id, u.name, u.school, u.avatar, u.introduce
+    from user u left join user_attention ua on u.id = ua.user_id
+    where u.id != #{userId,jdbcType=BIGINT} and ua.user_id != #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

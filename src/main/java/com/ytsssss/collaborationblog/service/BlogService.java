@@ -97,4 +97,10 @@ public interface BlogService {
      * @return
      */
     int getBlogCountByUser(Long userId);
+
+    /**
+     * 获取热门博客列表
+     * @return
+     */
+    List<Blog> getHotBlogList();
 }

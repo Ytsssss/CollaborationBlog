@@ -56,4 +56,11 @@ public interface UserMapper {
      * @return
      */
     User getUserInfoByIdAndPassword(@Param("accountId") String accountId, @Param("password") String password);
+
+    /**
+     * 获取用户推荐
+     * @param userId
+     * @return
+     */
+    List<User> getRecommend(@Param("userId") Long userId);
 }

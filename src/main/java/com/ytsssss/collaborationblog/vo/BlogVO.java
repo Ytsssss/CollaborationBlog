@@ -1,6 +1,8 @@
 package com.ytsssss.collaborationblog.vo;
 
 import java.util.Date;
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -19,11 +21,21 @@ public class BlogVO {
 
     private String img;
 
+    private List<Long> friendIds;
+
     private String precontent;
     @NotBlank(message = "博客标题不能为空")
     private String title;
 
     private static final long serialVersionUID = 1L;
+
+    public List<Long> getFriendIds() {
+        return friendIds;
+    }
+
+    public void setFriendIds(List<Long> friendIds) {
+        this.friendIds = friendIds;
+    }
 
     public String getPrecontent() {
         return precontent;

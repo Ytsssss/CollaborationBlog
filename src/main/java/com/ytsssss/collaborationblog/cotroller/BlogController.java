@@ -180,4 +180,14 @@ public class BlogController {
         UserCountVO userCountVO = blogService.getUserCount(user.getId());
         return JsonResult.success(userCountVO);
     }
+
+    /**
+     * 获取每周热门文章
+     * @return
+     */
+    @GetMapping(value = "blog/getHotBlogList")
+    public Object getHotBlogList(){
+        List<Blog> hotBlogList = blogService.getHotBlogList();
+        return JsonResult.success(hotBlogList);
+    }
 }

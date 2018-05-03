@@ -40,6 +40,8 @@ public interface BlogMapper {
 
     List<Long> getDraftBlogList(@Param("userId") Long userId);
 
+    List<Blog> getHotBlogList();
+
     List<Blog> getBlogListByIds(@Param("blogIdList") List<Long> blogIdList);
 
     List<BlogManageVO> searchBlogByTitle(@Param("title") String title, @Param("userId") Long userId);

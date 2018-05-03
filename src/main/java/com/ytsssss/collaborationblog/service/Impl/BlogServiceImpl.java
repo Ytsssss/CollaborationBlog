@@ -4,11 +4,9 @@ import com.vdurmont.emoji.EmojiParser;
 import com.ytsssss.collaborationblog.constant.status.GlobalResultStatus;
 import com.ytsssss.collaborationblog.domain.Blog;
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.domain.UserRoleRelation;
 import com.ytsssss.collaborationblog.exception.GlobalException;
-import com.ytsssss.collaborationblog.mapper.BlogFavoriteMapper;
-import com.ytsssss.collaborationblog.mapper.BlogLikeMapper;
-import com.ytsssss.collaborationblog.mapper.BlogMapper;
-import com.ytsssss.collaborationblog.mapper.UserAttentionMapper;
+import com.ytsssss.collaborationblog.mapper.*;
 import com.ytsssss.collaborationblog.service.BlogCommentService;
 import com.ytsssss.collaborationblog.service.BlogLikeService;
 import com.ytsssss.collaborationblog.service.BlogService;
@@ -47,6 +45,8 @@ public class BlogServiceImpl implements BlogService{
     private BlogLikeMapper blogLikeMapper;
     @Resource
     private UserAttentionMapper userAttentionMapper;
+    @Resource
+    private UserRoleRelationMapper userRoleRelationMapper;
 
     @Override
     public Object addBlog(BlogVO blogVO, User user) {
@@ -64,6 +64,7 @@ public class BlogServiceImpl implements BlogService{
         blog.setUpdateTime(date);
         blog.setPrecontent(blogVO.getPrecontent());
         logger.info(blog.toString());
+
 
         return blogMapper.insertSelective(blog);
     }
@@ -102,25 +103,30 @@ public class BlogServiceImpl implements BlogService{
         List<Long> draftBlogList = new ArrayList<>();
         List<Long> allBlogList = new ArrayList<>();
         if (range == 1){
-            logger.info("查询结果为："+blogMapper.getMyBlogList(userId));
-            return blogMapper.getMyBlogList(userId);
+            myBlogList = blogMapper.getMyBlogList(userId);
+            logger.info("查询结果为："+myBlogList);
+            return myBlogList;
         }else if (range == 2){
-            logger.info("查询结果为："+blogMapper.getPublicBlogList(userId));
-            return blogMapper.getPublicBlogList(userId);
+            publicBlogList = blogMapper.getPublicBlogList(userId);
+            logger.info("查询结果为："+publicBlogList);
+            return publicBlogList;
         }else if (range == 3){
-            logger.info("查询结果为："+blogMapper.getFriendBlogList(userId));
-            return blogMapper.getFriendBlogList(userId);
+            friendBlogList = blogMapper.getFriendBlogList(userId);
+            logger.info("查询结果为："+friendBlogList);
+            return friendBlogList;
         }else if (range == 4){
-            logger.info("查询结果为："+blogMapper.getDraftBlogList(userId));
-            return blogMapper.getDraftBlogList(userId);
+            draftBlogList = blogMapper.getDraftBlogList(userId);
+            logger.info("查询结果为："+draftBlogList);
+            return draftBlogList;
         }
         return Collections.emptyList();
     }
 
     @Override
     public List<Blog> getBlogList(List<Long> blogIdList) {
-        logger.info("查询结果为："+blogMapper.getBlogListByIds(blogIdList));
-        return blogMapper.getBlogListByIds(blogIdList);
+        List<Blog> blogList = blogMapper.getBlogListByIds(blogIdList);
+        logger.info("查询结果为："+blogList);
+        return blogList;
     }
 
     @Override
@@ -227,5 +233,24 @@ public class BlogServiceImpl implements BlogService{
     public int getBlogCountByUser(Long userId) {
         int blogCount = blogMapper.getBlogCount(userId);
         return blogCount;
+    }
+
+    @Override
+    public List<Blog> getHotBlogList() {
+        List<Blog> blogList = blogMapper.getHotBlogList();
+        logger.info(blogList.toString());
+        return blogList;
+    }
+
+    private void insertUserRole(List<Long> friendIds, Long blogId){
+        for (Long friendId : friendIds){
+            UserRoleRelation userRoleRelation = new UserRoleRelation();
+            userRoleRelation.setBlogId(blogId);
+            userRoleRelation.setCreateTime(new Date());
+            userRoleRelation.setUserId(friendId);
+            userRoleRelation.setUpdateTime(new Date());
+            userRoleRelation.setUserRole(1);//好友可以编辑
+            userRoleRelationMapper.insertSelective(userRoleRelation);
+        }
     }
 }

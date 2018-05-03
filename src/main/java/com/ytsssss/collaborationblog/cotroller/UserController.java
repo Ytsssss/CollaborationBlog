@@ -198,4 +198,20 @@ public class UserController {
         List<UserFriendVO> userFriendList= userRelationService.getUserFriendList(user.getId());
         return JsonResult.success(userFriendList);
     }
+
+    /**
+     * 推荐用户
+     * @param token
+     * @param pageNum
+     * @return
+     */
+    @GetMapping(value = "user/recommend/{pageNum}/{token}")
+    public Object getRecommend(@PathVariable("token") String token, @PathVariable("pageNum") Integer pageNum){
+        if (pageNum == null){
+            pageNum = 0;
+        }
+        User user = userService.getUserByToken(token);
+        List<FollowAttListVO> userList = userService.getUserRecommend(user.getId(), pageNum);
+        return JsonResult.success(userList);
+    }
 }

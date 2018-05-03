@@ -1,7 +1,9 @@
 package com.ytsssss.collaborationblog.service.Impl;
 
+import com.github.pagehelper.PageHelper;
 import com.ytsssss.collaborationblog.constant.GlobalConstant;
 import com.ytsssss.collaborationblog.domain.User;
+import com.ytsssss.collaborationblog.mapper.UserAttentionMapper;
 import com.ytsssss.collaborationblog.mapper.UserMapper;
 import com.ytsssss.collaborationblog.service.UserService;
 import com.ytsssss.collaborationblog.util.RandomUtil;
@@ -13,11 +15,13 @@ import com.ytsssss.collaborationblog.vo.UserChangeVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +37,8 @@ public class UserServiceImpl implements UserService{
     private RedisTemplate redisTemplate;
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private UserAttentionMapper userAttentionMapper;
     @Override
     public User getUserInfo(String accountId, String password) {
         User user = userMapper.getUserInfoByIdAndPassword(accountId, password);
@@ -126,6 +132,31 @@ public class UserServiceImpl implements UserService{
         int code = userMapper.updateByPrimaryKeySelective(newUser);
         updateUserByToken(newUser.getId(), token);
         return code;
+    }
+
+    @Override
+    public List<FollowAttListVO> getUserRecommend(Long userId, int pageNum) {
+        if (pageNum > 0){
+            PageHelper.startPage(pageNum, 3);
+        }
+        List<User> userList = userMapper.getRecommend(userId);
+        List<Long> followList = userAttentionMapper.getUserAttentionList(userId);
+        List<FollowAttListVO> followAttListVOList = new ArrayList<>();
+        for (User user : userList){
+            if (followList.contains(user.getId())){
+                continue;
+            }else {
+                FollowAttListVO followAttListVO = new FollowAttListVO();
+                followAttListVO.setFollow(false);
+                followAttListVO.setIntroduce(user.getIntroduce());
+                followAttListVO.setName(user.getName());
+                followAttListVO.setUserId(user.getId());
+                followAttListVO.setSchool(user.getSchool());
+                followAttListVO.setAvatar(user.getAvatar());
+                followAttListVOList.add(followAttListVO);
+            }
+        }
+        return followAttListVOList;
     }
 
     private void updateUserByToken(Long userId, String token){
