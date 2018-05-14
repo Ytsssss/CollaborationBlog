@@ -63,15 +63,14 @@ public class BlogServiceImpl implements BlogService{
         blog.setPrecontent(blogVO.getPrecontent());
         if (blogVO.getFriendIds() != null && !"".equals(blogVO.getFriendIds())){
             blogMapper.insertSelective(blog);
-            String str[] = blogVO.getFriendIds().split(",");
-            List<String> friendIds = Arrays.asList(str);
+            List<Long> friendIds = blogVO.getFriendIds();
             List<UserRoleRelation> userRoleRelationList = new ArrayList<>();
-            for (String friendId : friendIds){
+            for (Long friendId : friendIds){
                 UserRoleRelation userRoleRelation = new UserRoleRelation();
                 userRoleRelation.setUserRole(1);
                 userRoleRelation.setUpdateTime(new Date());
                 userRoleRelation.setCreateTime(new Date());
-                userRoleRelation.setUserId(Long.parseLong(friendId));
+                userRoleRelation.setUserId(friendId);
                 userRoleRelation.setBlogId(blog.getId());
                 userRoleRelationList.add(userRoleRelation);
             }
