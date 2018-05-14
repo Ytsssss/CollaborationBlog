@@ -362,7 +362,7 @@
   <select id="searchBlogByTitle" resultMap="SearchResultMap">
     select id, title, user_id, read_time, create_time
     from blog
-    where title like "%"#{title, jdbcType=VARCHAR}"%" and status = 0 and user_id = #{userId,jdbcType=BIGINT}
+    where title like "%"#{title, jdbcType=VARCHAR}"%" and status != 2 and user_id = #{userId,jdbcType=BIGINT}
   </select>
 
   <select id="searchBlogByName" resultMap="SearchResultMap">
@@ -370,7 +370,7 @@
     blog.read_time as read_time, blog.create_time as create_time, user.name as name
     from blog
     left join user on blog.user_id = user.id
-    where user.name like "%"#{userName, jdbcType=VARCHAR}"%" and status = 0 and blog.user_id = #{userId,jdbcType=BIGINT}
+    where user.name like "%"#{userName, jdbcType=VARCHAR}"%" and status != 2 and blog.user_id = #{userId,jdbcType=BIGINT}
   </select>
 
   <select id="getBlogCount" parameterType="java.lang.Long" resultType="java.lang.Integer">

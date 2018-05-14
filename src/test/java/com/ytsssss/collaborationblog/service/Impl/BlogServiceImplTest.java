@@ -25,6 +25,8 @@ public class BlogServiceImplTest {
     @Test
     public void addBlog() {
         BlogVO blogVO = new BlogVO();
+        blogVO.setTitle("这是标题");
+        blogVO.setPrecontent("hhhhh");
         blogVO.setContent("这是一篇博客");
         blogVO.setIsComment(0);
         blogVO.setIsPublic(0);

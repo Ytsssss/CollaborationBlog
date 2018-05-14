@@ -44,7 +44,7 @@ public class RegisterController {
     public Object getMailCode(@RequestParam("mailAddress") String mailAddress ){
         // 获取随机的验证码
         String code = RandomUtil.getRandomNum(6);
-        // 将验证码存入radis 用于验证
+        // 将验证码存入redis 用于验证
         mailService.saveRedisForMailCode(code);
         String emailContent = getEmailContent(code);
         mailService.sendTemplateMail(mailAddress, GlobalConstant.MAILTITTLE, emailContent);

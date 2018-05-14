@@ -28,7 +28,11 @@ public class BlogCommentServiceImplTest {
     private BlogCommentMapper blogCommentMapper;
     @Test
     public void addComment() {
-        blogCommentService.addComment(5L, 6L,9L,6L,"写的asllld");
+        blogCommentService.addComment(5L,
+                6L,
+                9L,
+                6L,
+                "写的asllld");
     }
 
     @Test

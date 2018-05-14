@@ -119,6 +119,12 @@ public class BlogServiceImpl implements BlogService{
             draftBlogList = blogMapper.getDraftBlogList(userId);
             logger.info("查询结果为："+draftBlogList);
             return draftBlogList;
+        }else if (range == 5){
+            //管理博客
+            allBlogList = blogMapper.getDraftBlogList(userId);
+            allBlogList.addAll(blogMapper.getMyBlogList(userId));
+            logger.info("查询结果为："+allBlogList);
+            return allBlogList;
         }
         return Collections.emptyList();
     }
