@@ -30,6 +30,7 @@ public class BlogServiceImplTest {
         blogVO.setContent("这是一篇博客");
         blogVO.setIsComment(0);
         blogVO.setIsPublic(0);
+        blogVO.setFriendIds("9,11,18,13");
         User user = new User();
         user.setId(9L);
         blogService.addBlog(blogVO, user);

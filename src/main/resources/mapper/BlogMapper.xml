@@ -15,6 +15,23 @@
     <result column="title" jdbcType="VARCHAR" property="title"/>
     <result column="precontent" jdbcType="VARCHAR" property="precontent"/>
   </resultMap>
+  <resultMap id="ResultMapWithUser" type="com.ytsssss.collaborationblog.domain.Blog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_comment" jdbcType="INTEGER" property="isComment" />
+    <result column="is_public" jdbcType="INTEGER" property="isPublic" />
+    <result column="read_time" jdbcType="BIGINT" property="readTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="title" jdbcType="VARCHAR" property="title"/>
+    <result column="precontent" jdbcType="VARCHAR" property="precontent"/>
+    <!--<collection property="userRole" resultMap="com.ytsssss.collaborationblog.domain.UserRoleRelation"-->
+            <!--column="id" select="com.ytsssss.collaborationblog.mapper.UserRoleRelationMapper">-->
+    <!--</collection>-->
+  </resultMap>
   <resultMap id="SearchResultMap" type="com.ytsssss.collaborationblog.vo.BlogManageVO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -138,7 +155,8 @@
       #{status,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT},
       #{img,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{precontent,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ytsssss.collaborationblog.domain.Blog">
+  <insert id="insertSelective" parameterType="com.ytsssss.collaborationblog.domain.Blog"
+          useGeneratedKeys="true" keyProperty="id">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -216,6 +234,9 @@
         #{precontent,jdbcType=VARCHAR},
       </if>
     </trim>
+    <selectKey keyProperty="id" resultType="java.lang.Long">
+      select LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <select id="countByExample" parameterType="com.ytsssss.collaborationblog.example.BlogExample" resultType="java.lang.Long">
     select count(*) from blog

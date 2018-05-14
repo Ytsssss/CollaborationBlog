@@ -21,7 +21,7 @@ public class BlogVO {
 
     private String img;
 
-    private List<Long> friendIds;
+    private String friendIds;
 
     private String precontent;
     @NotBlank(message = "博客标题不能为空")
@@ -29,11 +29,11 @@ public class BlogVO {
 
     private static final long serialVersionUID = 1L;
 
-    public List<Long> getFriendIds() {
+    public String getFriendIds() {
         return friendIds;
     }
 
-    public void setFriendIds(List<Long> friendIds) {
+    public void setFriendIds(String friendIds) {
         this.friendIds = friendIds;
     }
 

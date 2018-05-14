@@ -15,10 +15,7 @@ import com.ytsssss.collaborationblog.util.TimeUtil;
 import com.ytsssss.collaborationblog.vo.*;
 
 import java.nio.file.Watchable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -64,8 +61,25 @@ public class BlogServiceImpl implements BlogService{
         blog.setCreateTime(date);
         blog.setUpdateTime(date);
         blog.setPrecontent(blogVO.getPrecontent());
+        if (blogVO.getFriendIds() != null && !"".equals(blogVO.getFriendIds())){
+            blogMapper.insertSelective(blog);
+            String str[] = blogVO.getFriendIds().split(",");
+            List<String> friendIds = Arrays.asList(str);
+            List<UserRoleRelation> userRoleRelationList = new ArrayList<>();
+            for (String friendId : friendIds){
+                UserRoleRelation userRoleRelation = new UserRoleRelation();
+                userRoleRelation.setUserRole(1);
+                userRoleRelation.setUpdateTime(new Date());
+                userRoleRelation.setCreateTime(new Date());
+                userRoleRelation.setUserId(Long.parseLong(friendId));
+                userRoleRelation.setBlogId(blog.getId());
+                userRoleRelationList.add(userRoleRelation);
+            }
+            Integer code = userRoleRelationMapper.insertAllRole(userRoleRelationList);
+            logger.info(code.toString());
+            return code;
+        }
         logger.info(blog.toString());
-
 
         return blogMapper.insertSelective(blog);
     }

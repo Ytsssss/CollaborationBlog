@@ -27,4 +27,6 @@ public interface UserRoleRelationMapper {
     int updateByPrimaryKeySelective(UserRoleRelation record);
 
     int updateByPrimaryKey(UserRoleRelation record);
+
+    int insertAllRole(List<UserRoleRelation> userRoleRelationList);
 }

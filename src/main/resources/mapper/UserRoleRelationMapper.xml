@@ -116,6 +116,17 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{userRole,jdbcType=INTEGER}
       )
   </insert>
+  <insert id="insertAllRole" parameterType="com.ytsssss.collaborationblog.domain.UserRoleRelation">
+    insert into user_role_relation (blog_id, create_time,
+    update_time, user_id, user_role
+    )
+    values
+     <foreach collection="list" index="index" item="item" separator=",">
+       (#{item.blogId,jdbcType=BIGINT}, #{item.createTime,jdbcType=TIMESTAMP},
+       #{item.updateTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=BIGINT}, #{item.userRole,jdbcType=INTEGER}
+       )
+     </foreach>
+  </insert>
   <insert id="insertSelective" parameterType="com.ytsssss.collaborationblog.domain.UserRoleRelation">
     insert into user_role_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
