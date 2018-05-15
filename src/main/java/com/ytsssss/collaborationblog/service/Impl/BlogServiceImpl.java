@@ -286,6 +286,16 @@ public class BlogServiceImpl implements BlogService{
         return weekList;
     }
 
+    @Override
+    public List<HomeBlogVO> getFriendBlogList(Long userId) {
+        List<Long> friendBlogIds = userRoleRelationMapper.getFriendBlogIds(userId);
+        if (friendBlogIds.isEmpty() || friendBlogIds.size() == 0){
+            return Collections.emptyList();
+        }
+        List<HomeBlogVO> friendBlogList = getHomeBlogList(friendBlogIds);
+        return friendBlogList;
+    }
+
     private void insertUserRole(List<Long> friendIds, Long blogId){
         for (Long friendId : friendIds){
             UserRoleRelation userRoleRelation = new UserRoleRelation();

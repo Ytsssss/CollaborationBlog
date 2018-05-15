@@ -244,4 +244,10 @@
       user_role = #{userRole,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getFriendBlogIds" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select blog_id
+    from user_role_relation
+    where user_id = #{userId,jdbcType=BIGINT} and user_role = 1
+  </select>
 </mapper>

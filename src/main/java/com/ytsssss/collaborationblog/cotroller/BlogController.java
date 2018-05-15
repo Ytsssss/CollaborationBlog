@@ -202,4 +202,16 @@ public class BlogController {
         List<BlogWeekVO> blogWeekVOList = blogService.getWeekBlogList(user.getId());
         return JsonResult.success(blogWeekVOList);
     }
+
+    /**
+     * 获取可查看的好友博客列表
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "blog/getFriendBlogList/{token}")
+    public Object getFriendBlog(@PathVariable("token") String token){
+        User user = userService.getUserByToken(token);
+        List<HomeBlogVO> friendBlogList = blogService.getFriendBlogList(user.getId());
+        return JsonResult.success(friendBlogList);
+    }
 }

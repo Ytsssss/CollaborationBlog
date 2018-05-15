@@ -110,4 +110,11 @@ public interface BlogService {
      * @return
      */
     List<BlogWeekVO> getWeekBlogList(Long userId);
+
+    /**
+     * 获取可查看的好友博客列表
+     * @param userId
+     * @return
+     */
+    List<HomeBlogVO> getFriendBlogList(Long userId);
 }

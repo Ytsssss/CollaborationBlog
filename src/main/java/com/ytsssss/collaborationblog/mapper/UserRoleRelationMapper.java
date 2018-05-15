@@ -29,4 +29,6 @@ public interface UserRoleRelationMapper {
     int updateByPrimaryKey(UserRoleRelation record);
 
     int insertAllRole(List<UserRoleRelation> userRoleRelationList);
+
+    List<Long> getFriendBlogIds(@Param("userId") Long userId);
 }
