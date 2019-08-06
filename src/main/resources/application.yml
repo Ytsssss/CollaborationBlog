@@ -1,22 +1,22 @@
 spring:
   datasource:
-    url: jdbc:mysql://120.77.174.154:3306/collaboration_blog?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-    username: root
-    password: a123456!
+    url: jdbc:
+    username: 
+    password: 
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
   mail:
-    host: mail.yonyou.com
-    username: yegk7
-    password: yekun520
+    host: 
+    username: 
+    password: 
     default-encoding: utf-8
   redis:
     database: 0
-    host: 120.77.174.154
-    port: 6379
+    host: 
+    port: 
     password:
     pool:
       max-active: 8
@@ -31,9 +31,9 @@ mybatis:
   typeAliasesPackage: com.ytsssss.collaborationblog.domain
 mail:
   fromMail:
-     addr: yegk7@yonyou.com
+     addr: 
 qiniu:
-  accessKey: jAyjcTkZaYdX7MZkoGg1oSll53r3nUQVXjkTYxXW
-  secretKey: CzjtEg93N-zEjQCPsLL8seO---O1gXLDsd2Mc5IE
-  bucketName: blog
-  domainOfBucket: p3eetclr1.bkt.clouddn.com
+  accessKey: 
+  secretKey: 
+  bucketName: 
+  domainOfBucket: 
